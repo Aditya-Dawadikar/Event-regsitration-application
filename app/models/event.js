@@ -8,8 +8,7 @@ const EventSchema = mongoose.Schema({
         first: String,
         second: String,
         third: String,
-        Constellation: String,
-        required: true
+        Consolation: String
     },
     Event_Date: mongoose.Schema.Types.Date,
     Event_Time: String,
@@ -17,16 +16,15 @@ const EventSchema = mongoose.Schema({
     Event_Organizer: {
         Organizing_team: String,
         Spoc_1: {
-            Spoc_name: String,
-            Spoc_phone: Number,
-            Spoc_email: String
+            Spoc_1_name: String,
+            Spoc_1_phone: Number,
+            Spoc_1_email: String
         },
         Spoc_2: {
-            Spoc_name: String,
-            Spoc_phone: Number,
-            Spoc_email: String
-        },
-        required: true
+            Spoc_2_name: String,
+            Spoc_2_phone: Number,
+            Spoc_2_email: String
+        }
     },
     Registration: {
         required: Number,
