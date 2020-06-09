@@ -7,12 +7,10 @@ const TeamSchema = mongoose.Schema({
             Leader_name: String,
             Leader_email: String,
             Leader_phone: Number,
-            Alternative_phone: Number,
-            required: true
+            Alternative_phone: Number
         },
         Team_Member_count: {
-            type: Number,
-            required: true
+            type: Number
         },
         Team_Members: {
             member_1: String,
@@ -22,21 +20,15 @@ const TeamSchema = mongoose.Schema({
         },
         Event: {
             Event_name: String,
-            Event_description: String,
-            Event_time: String,
-            Event_date: mongoose.Schema.Types.Date,
-            ref: 'Events',
-            required: true
+            Event_id: String
         },
         Payment: {
             Payment_method: String,
             Trasaction_Id: String,
-            Payment_status: String,
-            required: true
+            Payment_status: String
         },
         Registrtion_date: {
-            type: mongoose.Schema.Types.Date,
-            required: true
+            type: mongoose.Schema.Types.Date
         }
     }
 });
