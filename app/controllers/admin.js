@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Admin = require('../models/admin');
 const jwt = require('jsonwebtoken');
+const jwt_decode = require('jwt-decode');
 const jwt_key = "mykey";
 
 exports.login = (req, res, next) => {
@@ -22,7 +23,8 @@ exports.login = (req, res, next) => {
                 if (result) {
                     const token = jwt.sign({
                             email: doc[0].Admin_email,
-                            userId: doc[0]._id
+                            docId: doc[0]._id,
+                            role: "admin"
                         },
                         jwt_key, {
                             expiresIn: "1h"
@@ -82,17 +84,29 @@ exports.signUp = (req, res, next) => {
 }
 
 exports.getAll = (req, res, next) => {
-    Admin.find()
-        .exec()
-        .then(docs => {
-            res.status(200).json(docs);
-            console.log(json);
-        })
-        .catch(err => {
-            res.status(500).json({
-                error: err
-            });
-        })
+    const token = req.headers.authorization;
+    const splitToken = token.split(" ");
+    const requiredToken = splitToken[1];
+
+    const decoded = jwt_decode(requiredToken);
+
+    if (decoded.role === 'admin') {
+        Admin.find()
+            .exec()
+            .then(docs => {
+                res.status(200).json(docs);
+                console.log(json);
+            })
+            .catch(err => {
+                res.status(500).json({
+                    error: err
+                });
+            })
+    } else {
+        res.status(401).json({
+            message: "access denied!"
+        });
+    }
 }
 
 exports.patchById = (req, res, next) => {
@@ -102,7 +116,29 @@ exports.patchById = (req, res, next) => {
 }
 
 exports.deleteAdmin = (req, res, next) => {
-    res.status(200).json({
-        message: "handling deleteAdmin"
-    });
+    const token = req.headers.authorization;
+    const splitToken = token.split(" ");
+    const requiredToken = splitToken[1];
+
+    const decoded = jwt_decode(requiredToken);
+
+    if (decoded.role === 'admin') {
+        const id = req.body.id;
+        Admin.findByIdAndDelete(id)
+            .exec()
+            .then(docs => {
+                res.status(200).json(docs);
+                console.log(json);
+            })
+            .catch(err => {
+                res.status(500).json({
+                    error: err
+                });
+            })
+    } else {
+        res.status(401).json({
+            message: "access denied"
+        });
+    }
+
 }
