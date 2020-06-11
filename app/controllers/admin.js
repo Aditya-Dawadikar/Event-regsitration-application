@@ -84,29 +84,17 @@ exports.signUp = (req, res, next) => {
 }
 
 exports.getAll = (req, res, next) => {
-    const token = req.headers.authorization;
-    const splitToken = token.split(" ");
-    const requiredToken = splitToken[1];
-
-    const decoded = jwt_decode(requiredToken);
-
-    if (decoded.role === 'admin') {
-        Admin.find()
-            .exec()
-            .then(docs => {
-                res.status(200).json(docs);
-                console.log(json);
-            })
-            .catch(err => {
-                res.status(500).json({
-                    error: err
-                });
-            })
-    } else {
-        res.status(401).json({
-            message: "access denied!"
-        });
-    }
+    Admin.find()
+        .exec()
+        .then(docs => {
+            res.status(200).json(docs);
+            console.log(docs);
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            });
+        })
 }
 
 exports.patchById = (req, res, next) => {
@@ -116,29 +104,16 @@ exports.patchById = (req, res, next) => {
 }
 
 exports.deleteAdmin = (req, res, next) => {
-    const token = req.headers.authorization;
-    const splitToken = token.split(" ");
-    const requiredToken = splitToken[1];
-
-    const decoded = jwt_decode(requiredToken);
-
-    if (decoded.role === 'admin') {
-        const id = req.body.id;
-        Admin.findByIdAndDelete(id)
-            .exec()
-            .then(docs => {
-                res.status(200).json(docs);
-                console.log(json);
-            })
-            .catch(err => {
-                res.status(500).json({
-                    error: err
-                });
-            })
-    } else {
-        res.status(401).json({
-            message: "access denied"
-        });
-    }
-
+    const id = req.body.id;
+    Admin.findByIdAndDelete(id)
+        .exec()
+        .then(docs => {
+            res.status(200).json(docs);
+            console.log(json);
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            });
+        })
 }

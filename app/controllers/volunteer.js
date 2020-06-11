@@ -23,7 +23,8 @@ exports.login = (req, res, next) => {
                 if (result) {
                     const token = jwt.sign({
                             email: doc[0].Volunteer_email,
-                            userId: doc[0]._id
+                            userId: doc[0]._id,
+                            role: "volunteer"
                         },
                         jwt_key, {
                             expiresIn: "1h"
