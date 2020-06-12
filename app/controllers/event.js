@@ -4,13 +4,27 @@ const jwt_decode = require('jwt-decode');
 
 exports.getAll = (req, res, next) => {
     Event.find()
+        .select('Event_name Event_id')
         .exec()
         .then(docs => {
-            res.status(200).json(docs);
+            const resObject = {
+                count: docs.length,
+                Events: docs.map(doc => {
+                    return {
+                        Event_name: doc.Event_name,
+                        Event_id: doc._id,
+                        request: {
+                            type: 'GET',
+                            url: 'http://localhost:3000/event/' + doc._id
+                        }
+                    }
+                })
+            };
+            res.status(200).json(resObject);
         })
         .catch(err => {
             res.status(500).json({
-                error: err
+                error: {}
             });
         });
 }
@@ -79,10 +93,15 @@ exports.deleteAll = (req, res, next) => {
 exports.getById = (req, res, next) => {
     id = req.params.id;
     Event.findById(id)
-        .exec()
+        .select('-__v')
         .then(doc => {
-            console.log(doc);
-            res.status(200).json(doc);
+            if (doc) {
+                res.status(200).json(doc);
+            } else {
+                res.status(404).json({
+                    message: "no valid entry found"
+                });
+            }
         })
         .catch(err => {
             res.status(500).json({
@@ -93,7 +112,7 @@ exports.getById = (req, res, next) => {
 
 exports.patchById = (req, res, next) => {
     const id = req.params.id;
-    const updateOperations = {};
+    const updateOperations = req.body;
     for (const operations in updateOperations) {
         updateOperations[operations.propName] = operations.value;
     }

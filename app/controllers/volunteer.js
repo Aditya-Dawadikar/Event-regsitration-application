@@ -53,7 +53,7 @@ exports.signUp = (req, res, next) => {
         }
         if (result) {
             const volunteer = new Volunteer({
-                Volunteer_id: new mongoose.Types.ObjectId(),
+                _id: new mongoose.Types.ObjectId(),
                 Volunteer_name: req.body.Volunteer_name,
                 Volunteer_email: req.body.Volunteer_email,
                 Volunteer_password: result,
@@ -80,9 +80,20 @@ exports.signUp = (req, res, next) => {
 
 exports.getAll = (req, res, next) => {
     Volunteer.find()
+        .select('Volunteer_id Volunteer_name Volunteer_phone')
         .exec()
         .then(docs => {
-            res.status(200).json(docs);
+            const resObject = {
+                count: docs.length,
+                volunter: docs.map(doc => {
+                    return {
+                        Volunteer_id: doc._id,
+                        Volunteer_name: doc.Volunteer_name,
+                        Volunteer_phone: doc.Volunteer_phone,
+                    }
+                })
+            }
+            res.status(200).json(resObject);
         })
         .catch(err => {
             res.status(500).json({
@@ -92,9 +103,22 @@ exports.getAll = (req, res, next) => {
 }
 
 exports.patchById = (req, res, next) => {
-    res.status(200).json({
-        message: "handling patchById"
-    });
+    const id = req.params.id;
+    const updateOperations = req.body;
+    for (const operations in updateOperations) {
+        updateOperations[operations.propName] = operations.value;
+    }
+    Volunteer.update({ _id: id }, { $set: updateOperations })
+        .exec()
+        .then(doc => {
+            res.status(200).json(doc);
+            console.log(doc);
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            });
+        });
 }
 
 exports.deleteById = (req, res, next) => {

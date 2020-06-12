@@ -1,12 +1,19 @@
 const mongoose = require('mongoose');
 const AdminSchema = mongoose.Schema({
-    Admin_id: mongoose.Schema.Types.ObjectId,
-    Admin_name: String,
+    _id: mongoose.Schema.Types.ObjectId,
+    Admin_name: {
+        type: String,
+        requried: true
+    },
     Admin_email: {
         type: String,
-        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+        required: true
     },
-    Admin_password: String
+    Admin_password: {
+        type: String,
+        requried: true
+    }
 });
 
 module.exports = mongoose.model('Admins', AdminSchema);

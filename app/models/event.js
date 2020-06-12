@@ -1,31 +1,32 @@
 const mongoose = require('mongoose');
 const EventSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    Event_name: String,
-    Event_Description: String,
-    Event_Fee: Number,
+    Event_name: { type: String, required: true },
+    Event_Description: { type: String, required: true },
+    Event_Fee: { type: Number, require: true, default: 0 },
     Event_Prices: {
         first: String,
         second: String,
         third: String,
         Consolation: String
     },
-    Event_Date: mongoose.Schema.Types.Date,
-    Event_Time: String,
-    Event_Venue: String,
+    Event_Date: { type: mongoose.Schema.Types.Date, requried: true },
+    Event_Time: { type: String, required: true },
+    Event_Venue: { type: String, required: true },
     Event_Organizer: {
-        Organizing_team: String,
+        Organizing_team: { type: String, required: true },
         Spoc_1: {
-            Spoc_1_name: String,
-            Spoc_1_phone: Number,
+            Spoc_1_name: { type: String, required: true },
+            Spoc_1_phone: { type: Number, required: true },
             Spoc_1_email: {
                 type: String,
-                match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+                match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+                required: true
             }
         },
         Spoc_2: {
-            Spoc_2_name: String,
-            Spoc_2_phone: Number,
+            Spoc_2_name: { type: String, required: true },
+            Spoc_2_phone: { type: Number, required: true },
             Spoc_2_email: {
                 type: String,
                 match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
@@ -33,7 +34,7 @@ const EventSchema = mongoose.Schema({
         }
     },
     Registration: {
-        required: Number,
+        required: { type: Number, default: 0 },
         registered: { type: Number, default: 0 }
     }
 });

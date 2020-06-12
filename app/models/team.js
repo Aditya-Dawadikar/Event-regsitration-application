@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const TeamSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     Team_details: {
-        Team_name: String,
+        Team_name: { type: String, required: true },
         Team_Leader: {
-            Leader_name: String,
+            Leader_name: { type: String, required: true },
             Leader_email: {
                 type: String,
                 match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
@@ -21,7 +21,7 @@ const TeamSchema = mongoose.Schema({
             }
         },
         Team_Member_count: {
-            type: Number
+            type: { type: Number, required: true }
         },
         Team_Members: {
             member_1: String,
@@ -30,7 +30,7 @@ const TeamSchema = mongoose.Schema({
             member_4: String,
         },
         Event: {
-            Event_name: String,
+            Event_name: { type: String, required: true },
             Event_id: String
         },
         Payment: {

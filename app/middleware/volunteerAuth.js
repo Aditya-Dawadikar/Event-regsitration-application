@@ -8,9 +8,7 @@ module.exports = (req, res, next) => {
         const decoded = jwt.verify(token, jwt_key);
         const decoded_token = jwt.decode(token);
         console.log("decoded token.role:" + decoded_token.role);
-        if (decoded_token.role === 'admin' || decoded_token.role === 'volunteer') {
-
-        } else {
+        if (decoded_token.role !== 'admin' && decoded_token.role !== 'volunteer') {
             throw new Error();
         }
     } catch (err) {

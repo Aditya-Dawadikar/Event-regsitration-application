@@ -47,11 +47,6 @@ exports.login = (req, res, next) => {
 }
 
 exports.signUp = (req, res, next) => {
-    if (!req.body) {
-        return res.status(400).json({
-            message: "req body cannot be empty"
-        });
-    }
     bcrypt.hash(req.body.Admin_password, 10, (err, result) => {
         if (err) {
             console.log(err);
@@ -62,7 +57,7 @@ exports.signUp = (req, res, next) => {
         } else {
             const admin_password = result;
             const admin = new Admin({
-                Admin_id: new mongoose.Types.ObjectId(),
+                _id: new mongoose.Types.ObjectId(),
                 Admin_name: req.body.Admin_name,
                 Admin_email: req.body.Admin_email,
                 Admin_password: admin_password
@@ -97,9 +92,22 @@ exports.getAll = (req, res, next) => {
 }
 
 exports.patchById = (req, res, next) => {
-    res.status(200).json({
-        message: "handling patchById"
-    });
+    const id = req.params.id;
+    const updateOperations = req.body;
+    for (const operations in updateOperations) {
+        updateOperations[operations.propName] = operations.value;
+    }
+    Admin.update({ _id: id }, { $set: updateOperations })
+        .exec()
+        .then(doc => {
+            res.status(200).json(doc);
+            console.log(doc);
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            });
+        });
 }
 
 exports.deleteAdmin = (req, res, next) => {

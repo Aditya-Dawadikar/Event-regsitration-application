@@ -6,14 +6,14 @@ const volunteerAuth = require('../middleware/volunteerAuth');
 //CRUD
 router.get('/', teamController.getAll);
 
-router.post('/', volunteerAuth, teamController.createNewTeam);
+router.post('/', teamController.createNewTeam);
 
-router.delete('/', volunteerAuth, teamController.deleteAll);
+router.delete('/', teamController.deleteAll);
 
 router.get('/:id', teamController.getById);
 
-router.patch('/:id', volunteerAuth, teamController.patchById);
+router.patch('/:id', teamController.patchById);
 
-router.delete('/:id', volunteerAuth, teamController.deleteById);
+router.delete('/:id', teamController.deleteById);
 
 module.exports = router;

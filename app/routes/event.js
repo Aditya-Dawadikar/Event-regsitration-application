@@ -2,18 +2,19 @@ const express = require('express');
 const router = express.Router();
 const eventHandler = require("../controllers/event");
 const adminAuth = require("../middleware/adminAuth");
+const volunteerAuth = require("../middleware/volunteerAuth");
 
 //CRUD
 router.get('/', eventHandler.getAll);
 
-router.post('/', adminAuth, eventHandler.createEvent);
+router.post('/', eventHandler.createEvent);
 
-router.delete('/', adminAuth, eventHandler.deleteAll);
+router.delete('/', eventHandler.deleteAll);
 
 router.get('/:id', eventHandler.getById);
 
-router.patch('/:id', adminAuth, eventHandler.patchById);
+router.patch('/:id', eventHandler.patchById);
 
-router.delete('/:id', adminAuth, eventHandler.deleteById);
+router.delete('/:id', eventHandler.deleteById);
 
 module.exports = router;

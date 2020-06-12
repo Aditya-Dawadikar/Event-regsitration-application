@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 const VolunteerSchema = mongoose.Schema({
-    Volunteer_id: mongoose.Schema.Types.ObjectId,
-    Volunteer_name: String,
+    _id: mongoose.Schema.Types.ObjectId,
+    Volunteer_name: { type: String, required: true },
     Volunteer_email: {
         type: String,
-        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+        required: true
     },
-    Volunteer_password: String,
+    Volunteer_password: { type: String, required: true },
     Volunteer_phone: {
         type: Number,
         match: /^[0-9]{10}$/,

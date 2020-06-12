@@ -4,14 +4,28 @@ const Event = require('../models/event');
 
 exports.getAll = (req, res, next) => {
     Team.find()
+        .select('_id Team_details.Team_name Team_details.Team_Leader.Leader_name Team_details.Event.Event_name')
         .exec()
         .then(docs => {
-            res.status(200).json({
-                result: docs
-            });
+            const resObject = {
+                count: docs.length,
+                Teams: docs.map(doc => {
+                    return {
+                        Team_name: doc.Team_details.Team_name,
+                        Team_id: doc._id,
+                        Team_Leader: doc.Team_details.Team_Leader.Leader_name,
+                        Event: doc.Team_details.Event.Event_name,
+                        request: {
+                            type: 'GET',
+                            url: "http://localhost:3000/team/" + doc._id
+                        }
+                    }
+                })
+            };
+            res.status(200).json(resObject);
         })
         .catch(err => {
-            res.status(404).json({
+            res.status(500).json({
                 error: err
             });
         });
@@ -70,6 +84,7 @@ exports.createNewTeam = (req, res, next) => {
                     });
                 });
 
+            /*
             //update event by id
             Event.Update({ _id: eventId }, {
                     $inc: {
@@ -86,6 +101,7 @@ exports.createNewTeam = (req, res, next) => {
                         error: err
                     });
                 })
+            */
         })
         .catch(err => {
             res.status(404).json({
@@ -113,12 +129,16 @@ exports.deleteAll = (req, res, next) => {
 exports.getById = (req, res, next) => {
     id = req.params.id;
     Team.findById(id)
+        .select('-__v')
         .exec()
         .then(doc => {
-            console.log(doc);
-            res.status(200).json({
-                result: doc
-            });
+            if (doc) {
+                res.status(200).json(doc);
+            } else {
+                res.status(404).json({
+                    message: "no valid entry found"
+                });
+            }
         })
         .catch(err => {
             res.status(500).json({
@@ -130,7 +150,7 @@ exports.getById = (req, res, next) => {
 //some fixing need to be done for patch
 exports.patchById = (req, res, next) => {
     const id = req.params.id;
-    const updateOperation = {};
+    const updateOperation = req.body;
     for (const operations in req.body) {
         updateOperation[operations.propName] = operations.value;
     }

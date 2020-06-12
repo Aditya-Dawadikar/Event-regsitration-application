@@ -10,19 +10,20 @@ router.post('/login', adminController.login);
 router.post('/signup', adminController.signUp);
 
 //CRUD
-router.get('/', adminAuth, adminController.getAll);
+router.get('/', adminController.getAll);
 
-router.patch('/:id', adminAuth, adminController.patchById);
+router.patch('/:id', adminController.patchById);
 
-router.delete('/:id', adminAuth, adminController.deleteAdmin);
+router.delete('/:id', adminController.deleteAdmin);
+
+//get specific data for export
+router.get('/email/teams', adminPrivilegeController.getAllTeamEmails);
+
+router.get('/contact/teams', adminPrivilegeController.getAllTeamContacts);
 
 //third party services
-router.post('/emailTeams', adminAuth, adminPrivilegeController.sendMailToAll);
+router.post('/emailTeams', adminPrivilegeController.sendMailToAll);
 
-//extra 
-router.get('/emailTeams', adminAuth, adminPrivilegeController.getAllTeamEmails);
-
-//router.get('/contactTeams', adminAuth, adminPrivilegeController.getAllTeamContacts);
 
 
 module.exports = router;
