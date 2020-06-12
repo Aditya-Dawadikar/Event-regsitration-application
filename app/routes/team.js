@@ -4,8 +4,6 @@ const teamController = require('../controllers/team');
 const volunteerAuth = require('../middleware/volunteerAuth');
 
 //CRUD
-router.get('/', teamController.getAll);
-
 router.post('/', teamController.createNewTeam);
 
 router.delete('/', teamController.deleteAll);

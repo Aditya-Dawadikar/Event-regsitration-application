@@ -2,33 +2,6 @@ const mongoose = require('mongoose');
 const Event = require('../models/event');
 const jwt_decode = require('jwt-decode');
 
-exports.getAll = (req, res, next) => {
-    Event.find()
-        .select('Event_name Event_id')
-        .exec()
-        .then(docs => {
-            const resObject = {
-                count: docs.length,
-                Events: docs.map(doc => {
-                    return {
-                        Event_name: doc.Event_name,
-                        Event_id: doc._id,
-                        request: {
-                            type: 'GET',
-                            url: 'http://localhost:3000/event/' + doc._id
-                        }
-                    }
-                })
-            };
-            res.status(200).json(resObject);
-        })
-        .catch(err => {
-            res.status(500).json({
-                error: {}
-            });
-        });
-}
-
 exports.createEvent = (req, res, next) => {
     const event = new Event({
         _id: new mongoose.Types.ObjectId(),

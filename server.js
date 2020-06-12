@@ -18,6 +18,7 @@ const adminRoutes = require("./app/routes/admin");
 const volunteerRoutes = require("./app/routes/volunteer");
 const eventRoutes = require("./app/routes/event");
 const teamRoutes = require("./app/routes/team");
+const overviewRoutes = require("./app/routes/overview");
 
 //middleware
 app.use(cors());
@@ -29,6 +30,7 @@ app.use('/admin', adminRoutes);
 app.use('/volunteer', volunteerRoutes);
 app.use('/event', eventRoutes);
 app.use('/team', teamRoutes);
+app.use('/overview', overviewRoutes);
 
 //listen to port
 app.listen(3000, () => {

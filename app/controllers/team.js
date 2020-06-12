@@ -2,44 +2,16 @@ const mongoose = require('mongoose');
 const Team = require('../models/team');
 const Event = require('../models/event');
 
-exports.getAll = (req, res, next) => {
-    Team.find()
-        .select('_id Team_details.Team_name Team_details.Team_Leader.Leader_name Team_details.Event.Event_name')
-        .exec()
-        .then(docs => {
-            const resObject = {
-                count: docs.length,
-                Teams: docs.map(doc => {
-                    return {
-                        Team_name: doc.Team_details.Team_name,
-                        Team_id: doc._id,
-                        Team_Leader: doc.Team_details.Team_Leader.Leader_name,
-                        Event: doc.Team_details.Event.Event_name,
-                        request: {
-                            type: 'GET',
-                            url: "http://localhost:3000/team/" + doc._id
-                        }
-                    }
-                })
-            };
-            res.status(200).json(resObject);
-        })
-        .catch(err => {
-            res.status(500).json({
-                error: err
-            });
-        });
-}
-
 exports.createNewTeam = (req, res, next) => {
     //find event id
     Event.find({ Event_name: req.body.Team_details.Event.Event_name })
         .exec()
         .then(doc => {
             const eventId = doc[0]._id;
-            console.log(doc[0]);
-            console.log("doc._id:" + eventId);
-
+            const registeredCount = doc[0].Registration.registered;
+            console.log("registered count" + registeredCount);
+            const Count = registeredCount + 1;
+            console.log("registered count on increment" + Count);
             //create new object
             const team = new Team({
                 _id: new mongoose.Types.ObjectId(),
@@ -75,7 +47,10 @@ exports.createNewTeam = (req, res, next) => {
             //save
             team.save()
                 .then(result => {
-                    console.log(result);
+                    //console.log(result);
+                    res.status(200).json({
+                        message: "new team created"
+                    });
                 })
                 .catch(err => {
                     console.log(err);
@@ -84,24 +59,21 @@ exports.createNewTeam = (req, res, next) => {
                     });
                 });
 
-            /*
             //update event by id
-            Event.Update({ _id: eventId }, {
-                    $inc: {
-                        "Registration.registered": 1
-                    }
-                })
+            /*
+            Event.Update({ _id: eventId }, { $set: { "Registration.registered": Count } })
                 .exec()
                 .then(doc => {
                     console.log(doc);
                     console.log("Event registred count updated successful");
+
                 })
                 .catch(err => {
                     res.status(404).json({
                         error: err
                     });
                 })
-            */
+                */
         })
         .catch(err => {
             res.status(404).json({
@@ -147,7 +119,6 @@ exports.getById = (req, res, next) => {
         });
 }
 
-//some fixing need to be done for patch
 exports.patchById = (req, res, next) => {
     const id = req.params.id;
     const updateOperation = req.body;

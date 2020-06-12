@@ -78,30 +78,6 @@ exports.signUp = (req, res, next) => {
     });
 }
 
-exports.getAll = (req, res, next) => {
-    Volunteer.find()
-        .select('Volunteer_id Volunteer_name Volunteer_phone')
-        .exec()
-        .then(docs => {
-            const resObject = {
-                count: docs.length,
-                volunter: docs.map(doc => {
-                    return {
-                        Volunteer_id: doc._id,
-                        Volunteer_name: doc.Volunteer_name,
-                        Volunteer_phone: doc.Volunteer_phone,
-                    }
-                })
-            }
-            res.status(200).json(resObject);
-        })
-        .catch(err => {
-            res.status(500).json({
-                error: err
-            });
-        });
-}
-
 exports.patchById = (req, res, next) => {
     const id = req.params.id;
     const updateOperations = req.body;

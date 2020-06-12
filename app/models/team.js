@@ -20,9 +20,7 @@ const TeamSchema = mongoose.Schema({
                 required: true
             }
         },
-        Team_Member_count: {
-            type: { type: Number, required: true }
-        },
+        Team_Member_count: { type: Number, required: true },
         Team_Members: {
             member_1: String,
             member_2: String,

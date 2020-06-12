@@ -10,8 +10,6 @@ router.post('/login', adminController.login);
 router.post('/signup', adminController.signUp);
 
 //CRUD
-router.get('/', adminController.getAll);
-
 router.patch('/:id', adminController.patchById);
 
 router.delete('/:id', adminController.deleteAdmin);
@@ -22,8 +20,8 @@ router.get('/email/teams', adminPrivilegeController.getAllTeamEmails);
 router.get('/contact/teams', adminPrivilegeController.getAllTeamContacts);
 
 //third party services
-router.post('/emailTeams', adminPrivilegeController.sendMailToAll);
+router.post('/emailTeams', adminPrivilegeController.sendMailToAllTeams);
 
-
+router.post('/emailVolunteers', adminPrivilegeController.sendMailToAllVolunteers);
 
 module.exports = router;

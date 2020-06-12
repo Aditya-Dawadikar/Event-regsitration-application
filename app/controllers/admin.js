@@ -77,20 +77,6 @@ exports.signUp = (req, res, next) => {
     });
 }
 
-exports.getAll = (req, res, next) => {
-    Admin.find()
-        .exec()
-        .then(docs => {
-            res.status(200).json(docs);
-            console.log(docs);
-        })
-        .catch(err => {
-            res.status(500).json({
-                error: err
-            });
-        })
-}
-
 exports.patchById = (req, res, next) => {
     const id = req.params.id;
     const updateOperations = req.body;

@@ -10,8 +10,6 @@ router.post('/login', volunteerController.login);
 router.post('/signup', volunteerController.signUp);
 
 //CRUD
-router.get('/', volunteerController.getAll);
-
 router.patch('/:id', volunteerController.patchById);
 
 router.delete('/:id', volunteerController.deleteById);
