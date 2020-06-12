@@ -9,8 +9,16 @@ const TeamSchema = mongoose.Schema({
                 type: String,
                 match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
             },
-            Leader_phone: Number,
-            Alternative_phone: Number
+            Leader_phone: {
+                type: Number,
+                match: /^[0-9]{10}$/,
+                required: true
+            },
+            Alternative_phone: {
+                type: Number,
+                match: /^[0-9]{10}$/,
+                required: true
+            }
         },
         Team_Member_count: {
             type: Number

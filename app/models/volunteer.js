@@ -7,7 +7,11 @@ const VolunteerSchema = mongoose.Schema({
         match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     },
     Volunteer_password: String,
-    Volunteer_phone: Number,
+    Volunteer_phone: {
+        type: Number,
+        match: /^[0-9]{10}$/,
+        required: true
+    },
     Volunteer_class: String,
     Volunteer_divison: String
 });

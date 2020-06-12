@@ -26,6 +26,7 @@ exports.sendMailToAll = (req, res, next) => {
             for (i = 1; i < docs.length; i++) {
                 if (i != (docs.length - 1)) {
                     team_email = emailsRecipients.concat(docs[i].Team_details.Team_Leader.Leader_email);
+                    emailsRecipients = team_email;
                     team_email = emailsRecipients.concat(',');
                     emailsRecipients = team_email;
                 } else {
@@ -54,6 +55,36 @@ exports.sendMailToAll = (req, res, next) => {
                     result: result
                 });
             });
+        })
+        .catch(err => {
+            res.status(404).json({
+                error: err
+            });
+        });
+}
+
+exports.getAllTeamEmails = (req, res, next) => {
+    Team.find()
+        .exec()
+        .then(docs => {
+            var emailsRecipients = docs[0].Team_details.Team_Leader.Leader_email + ',';
+            var team_email = "";
+            for (i = 1; i < docs.length; i++) {
+                if (i != (docs.length - 1)) {
+                    team_email = emailsRecipients.concat(docs[i].Team_details.Team_Leader.Leader_email);
+                    emailsRecipients = team_email;
+                    team_email = emailsRecipients.concat(',');
+                    emailsRecipients = team_email;
+                } else {
+                    team_email = emailsRecipients.concat(docs[i].Team_details.Team_Leader.Leader_email);
+                    emailsRecipients = team_email;
+                }
+            }
+
+            res.status(200).json({
+                message: "found all emails",
+                emails: emailsRecipients
+            })
         })
         .catch(err => {
             res.status(404).json({

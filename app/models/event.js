@@ -34,7 +34,7 @@ const EventSchema = mongoose.Schema({
     },
     Registration: {
         required: Number,
-        registered: Number
+        registered: { type: Number, default: 0 }
     }
 });
 

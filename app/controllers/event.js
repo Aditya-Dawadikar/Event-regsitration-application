@@ -44,8 +44,7 @@ exports.createEvent = (req, res, next) => {
             }
         },
         Registration: {
-            required: req.body.Registration.required,
-            registered: req.body.Registration.registered
+            required: req.body.Registration.required
         }
     });
 

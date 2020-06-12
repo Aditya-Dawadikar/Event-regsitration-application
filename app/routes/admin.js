@@ -17,6 +17,12 @@ router.patch('/:id', adminAuth, adminController.patchById);
 router.delete('/:id', adminAuth, adminController.deleteAdmin);
 
 //third party services
-router.post('/email', adminAuth, adminPrivilegeController.sendMailToAll);
+router.post('/emailTeams', adminAuth, adminPrivilegeController.sendMailToAll);
+
+//extra 
+router.get('/emailTeams', adminAuth, adminPrivilegeController.getAllTeamEmails);
+
+//router.get('/contactTeams', adminAuth, adminPrivilegeController.getAllTeamContacts);
+
 
 module.exports = router;
