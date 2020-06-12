@@ -5,7 +5,6 @@ exports.getAll = (req, res, next) => {
     Team.find()
         .exec()
         .then(docs => {
-            console.log(docs);
             res.status(200).json({
                 result: docs
             });

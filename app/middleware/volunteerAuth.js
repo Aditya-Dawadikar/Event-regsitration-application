@@ -1,13 +1,10 @@
-const jwt_decode = require('jwt-decode');
+const jwt = require('jsonwebtoken');
+const jwt_key = "mykey";
 
 module.exports = (req, res, next) => {
     try {
-        const token = req.headers.authorization;
-        const splitToken = token.split(" ");
-        const requiredToken = splitToken[1];
-
-        const decoded = jwt_decode(requiredToken);
-        console.log(decoded);
+        const token = req.headers.authorization.split(" ")[1];
+        const decoded = jwt.verify(token, jwt_key);
     } catch (err) {
         res.status(401).json({
             message: "auth failed"

@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const Volunteer = require('../models/volunteer');
 const jwt = require('jsonwebtoken');
 const jwt_key = "mykey";
-const jwt_decode = require('jwt-decode');
 
 exports.login = (req, res, next) => {
     Volunteer.find({ Volunteer_email: req.body.Volunteer_email })
@@ -80,28 +79,16 @@ exports.signUp = (req, res, next) => {
 }
 
 exports.getAll = (req, res, next) => {
-    const token = req.headers.authorization;
-    const splitToken = token.split(" ");
-    const requiredToken = splitToken[1];
-
-    const decoded = jwt_decode(requiredToken);
-
-    if (decoded.role === 'admin') {
-        Volunteer.find()
-            .exec()
-            .then(docs => {
-                res.status(200).json(docs);
-            })
-            .catch(err => {
-                res.status(500).json({
-                    error: err
-                });
+    Volunteer.find()
+        .exec()
+        .then(docs => {
+            res.status(200).json(docs);
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
             });
-    } else {
-        res.status(401).json({
-            message: "access denied!"
         });
-    }
 }
 
 exports.patchById = (req, res, next) => {
@@ -111,28 +98,16 @@ exports.patchById = (req, res, next) => {
 }
 
 exports.deleteById = (req, res, next) => {
-    const token = req.headers.authorization;
-    const splitToken = token.split(" ");
-    const requiredToken = splitToken[1];
-
-    const decoded = jwt_decode(requiredToken);
-
-    if (decoded.role === 'admin') {
-        const id = req.params.id;
-        Volunteer.findByIdAndDelete(id)
-            .exec()
-            .then(result => {
-                res.status(200).json({
-                    message: "successfully deleted",
-                    doc: result
-                });
-            })
-            .catch(err => {
-                error: err
-            })
-    } else {
-        res.status(401).json({
-            message: "access denied!"
-        });
-    }
+    const id = req.params.id;
+    Volunteer.findByIdAndDelete(id)
+        .exec()
+        .then(result => {
+            res.status(200).json({
+                message: "successfully deleted",
+                doc: result
+            });
+        })
+        .catch(err => {
+            error: err
+        })
 }

@@ -18,12 +18,18 @@ const EventSchema = mongoose.Schema({
         Spoc_1: {
             Spoc_1_name: String,
             Spoc_1_phone: Number,
-            Spoc_1_email: String
+            Spoc_1_email: {
+                type: String,
+                match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+            }
         },
         Spoc_2: {
             Spoc_2_name: String,
             Spoc_2_phone: Number,
-            Spoc_2_email: String
+            Spoc_2_email: {
+                type: String,
+                match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+            }
         }
     },
     Registration: {

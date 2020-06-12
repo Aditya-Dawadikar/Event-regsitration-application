@@ -4,10 +4,12 @@ const adminController = require("../controllers/admin");
 const adminAuth = require("../middleware/adminAuth");
 const adminPrivilegeController = require('../controllers/adminPrivilege');
 
+//login and signup
 router.post('/login', adminController.login);
 
 router.post('/signup', adminController.signUp);
 
+//CRUD
 router.get('/', adminAuth, adminController.getAll);
 
 router.patch('/:id', adminAuth, adminController.patchById);

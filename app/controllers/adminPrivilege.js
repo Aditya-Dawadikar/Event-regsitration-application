@@ -15,8 +15,6 @@ exports.sendMailToAll = (req, res, next) => {
         }
     });
 
-    console.log("handling");
-
     //find team emails
     Team.find()
         .exec()
@@ -36,10 +34,7 @@ exports.sendMailToAll = (req, res, next) => {
                 }
             }
 
-            console.log({
-                emails: team_email
-            });
-
+            //email details
             const email_option = {
                 from: decoded.email,
                 to: team_email,
@@ -55,11 +50,9 @@ exports.sendMailToAll = (req, res, next) => {
                 }
                 res.status(200).json({
                     message: "successfully email sent",
+                    emails: team_email,
                     result: result
                 });
-            });
-            res.status(200).json({
-                emails: team_email
             });
         })
         .catch(err => {

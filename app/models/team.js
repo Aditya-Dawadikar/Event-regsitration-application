@@ -5,7 +5,10 @@ const TeamSchema = mongoose.Schema({
         Team_name: String,
         Team_Leader: {
             Leader_name: String,
-            Leader_email: String,
+            Leader_email: {
+                type: String,
+                match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+            },
             Leader_phone: Number,
             Alternative_phone: Number
         },

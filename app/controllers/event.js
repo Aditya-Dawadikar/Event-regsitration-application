@@ -6,7 +6,6 @@ exports.getAll = (req, res, next) => {
     Event.find()
         .exec()
         .then(docs => {
-            console.log(docs);
             res.status(200).json(docs);
         })
         .catch(err => {
@@ -53,7 +52,6 @@ exports.createEvent = (req, res, next) => {
     event.save()
         .then(doc => {
             res.status(200).json(doc);
-            console.log(doc);
         })
         .catch(err => {
             console.log(err);
