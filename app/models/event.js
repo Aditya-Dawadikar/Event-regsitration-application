@@ -15,23 +15,16 @@ const EventSchema = mongoose.Schema({
     Event_Venue: { type: String, required: true },
     Event_Organizer: {
         Organizing_team: { type: String, required: true },
-        Spoc_1: {
-            Spoc_1_name: { type: String, required: true },
-            Spoc_1_phone: { type: Number, required: true },
-            Spoc_1_email: {
+        Spoc_Count: { type: Number, require: true },
+        Spoc: [{
+            Spoc_name: { type: String, required: true },
+            Spoc_phone: { type: Number, required: true },
+            Spoc_email: {
                 type: String,
                 match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
                 required: true
             }
-        },
-        Spoc_2: {
-            Spoc_2_name: { type: String, required: true },
-            Spoc_2_phone: { type: Number, required: true },
-            Spoc_2_email: {
-                type: String,
-                match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-            }
-        }
+        }]
     },
     Registration: {
         required: { type: Number, default: 0 },

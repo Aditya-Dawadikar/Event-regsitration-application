@@ -9,9 +9,17 @@ exports.createNewTeam = (req, res, next) => {
         .then(doc => {
             const eventId = doc[0]._id;
             const registeredCount = doc[0].Registration.registered;
-            console.log("registered count" + registeredCount);
+            //console.log("registered count" + registeredCount);
             const Count = registeredCount + 1;
-            console.log("registered count on increment" + Count);
+            //console.log("registered count on increment" + Count);
+
+            const members = new Array();
+            for (let i = 0; i < req.body.Team_details.Team_Member_count; i++) {
+                const member = { member_name: req.body.Team_details.Team_Members[i].member_name };
+                members.push(member);
+            }
+            console.log(members);
+
             //create new object
             const team = new Team({
                 _id: new mongoose.Types.ObjectId(),
@@ -24,12 +32,7 @@ exports.createNewTeam = (req, res, next) => {
                         Alternative_phone: req.body.Team_details.Team_Leader.Alternative_phone
                     },
                     Team_Member_count: req.body.Team_details.Team_Member_count,
-                    Team_Members: {
-                        member_1: req.body.Team_details.Team_Members.member_1,
-                        member_2: req.body.Team_details.Team_Members.member_2,
-                        member_3: req.body.Team_details.Team_Members.member_3,
-                        member_4: req.body.Team_details.Team_Members.member_4,
-                    },
+                    Team_Members: members,
                     Event: {
                         Event_name: req.body.Team_details.Event.Event_name,
                         Event_id: eventId

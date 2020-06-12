@@ -21,12 +21,9 @@ const TeamSchema = mongoose.Schema({
             }
         },
         Team_Member_count: { type: Number, required: true },
-        Team_Members: {
-            member_1: String,
-            member_2: String,
-            member_3: String,
-            member_4: String,
-        },
+        Team_Members: [{
+            member_name: { type: String, required: true }
+        }],
         Event: {
             Event_name: { type: String, required: true },
             Event_id: String

@@ -3,6 +3,16 @@ const Event = require('../models/event');
 const jwt_decode = require('jwt-decode');
 
 exports.createEvent = (req, res, next) => {
+    const spocs = new Array();
+    for (let i = 0; i < req.body.Event_Organizer.Spoc_Count; i++) {
+        const obj = {
+            Spoc_name: req.body.Event_Organizer.Spoc[i].Spoc_name,
+            Spoc_phone: req.body.Event_Organizer.Spoc[i].Spoc_phone,
+            Spoc_email: req.body.Event_Organizer.Spoc[i].Spoc_email
+        };
+        spocs.push(obj);
+    }
+    console.log(spocs);
     const event = new Event({
         _id: new mongoose.Types.ObjectId(),
         Event_name: req.body.Event_name,
@@ -19,16 +29,8 @@ exports.createEvent = (req, res, next) => {
         Event_Venue: req.body.Event_Venue,
         Event_Organizer: {
             Organizing_team: req.body.Event_Organizer.Organizing_team,
-            Spoc_1: {
-                Spoc_1_name: req.body.Event_Organizer.Spoc_1_name,
-                Spoc_1_phone: req.body.Event_Organizer.Spoc_1_phone,
-                Spoc_1_email: req.body.Event_Organizer.Spoc_1_email
-            },
-            Spoc_2: {
-                Spoc_2_name: req.body.Event_Organizer.Spoc_2_name,
-                Spoc_2_phone: req.body.Event_Organizer.Spoc_2_phone,
-                Spoc_2_email: req.body.Event_Organizer.Spoc_2_email
-            }
+            Spoc_Count: req.body.Event_Organizer.Spoc_Count,
+            Spoc: spocs
         },
         Registration: {
             required: req.body.Registration.required
