@@ -9,16 +9,13 @@ exports.createNewTeam = (req, res, next) => {
         .then(doc => {
             const eventId = doc[0]._id;
             const registeredCount = doc[0].Registration.registered;
-            //console.log("registered count" + registeredCount);
             const Count = registeredCount + 1;
-            //console.log("registered count on increment" + Count);
 
             const members = new Array();
             for (let i = 0; i < req.body.Team_details.Team_Member_count; i++) {
                 const member = { member_name: req.body.Team_details.Team_Members[i].member_name };
                 members.push(member);
             }
-            console.log(members);
 
             //create new object
             const team = new Team({
@@ -46,14 +43,21 @@ exports.createNewTeam = (req, res, next) => {
                 }
             });
 
-            console.log("new team created");
             //save
             team.save()
                 .then(result => {
-                    //console.log(result);
-                    res.status(200).json({
-                        message: "new team created"
-                    });
+                    Event.findByIdAndUpdate(eventId, { $set: { 'Registration.registered': Count } }, { useFindAndModify: false })
+                        .exec()
+                        .then(doc => {
+                            res.status(200).json({
+                                message: "new team created successfully"
+                            });
+                        })
+                        .catch(err => {
+                            res.status(404).json({
+                                error: err
+                            });
+                        })
                 })
                 .catch(err => {
                     console.log(err);
@@ -61,22 +65,6 @@ exports.createNewTeam = (req, res, next) => {
                         error: err
                     });
                 });
-
-            //update event by id
-            /*
-            Event.Update({ _id: eventId }, { $set: { "Registration.registered": Count } })
-                .exec()
-                .then(doc => {
-                    console.log(doc);
-                    console.log("Event registred count updated successful");
-
-                })
-                .catch(err => {
-                    res.status(404).json({
-                        error: err
-                    });
-                })
-                */
         })
         .catch(err => {
             res.status(404).json({

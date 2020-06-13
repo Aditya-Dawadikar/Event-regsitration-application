@@ -1,12 +1,13 @@
 const nodemailer = require('nodemailer');
-const jwt_decoder = require('jwt-decode');
+const jwt = require('jsonwebtoken');
+//const jwt_decoder = require('jwt-decode');
 const Team = require('../models/team');
 const Volunteer = require('../models/volunteer');
 
 exports.sendMailToAllTeams = (req, res, next) => {
 
     const token = req.headers.authorization;
-    const decoded = jwt_decoder(token);
+    const decoded = jwt.decoder(token);
 
     const transporter = nodemailer.createTransport({
         service: "gmail",

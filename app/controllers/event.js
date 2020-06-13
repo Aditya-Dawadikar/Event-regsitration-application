@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Event = require('../models/event');
-const jwt_decode = require('jwt-decode');
+//const jwt_decode = require('jwt-decode');
 
 exports.createEvent = (req, res, next) => {
     const spocs = new Array();
