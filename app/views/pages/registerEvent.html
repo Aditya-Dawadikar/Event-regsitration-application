@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration</title>
+    <base href="/">
+    <style>
+        body{
+            margin: 0px;
+            font-family: "Open Sans",sans-serif;
+            background: #ddd;
+            box-sizing: border-box;
+        }
+    </style>
+     <link rel="stylesheet" href="stylesheets/main.css">
+</head>
+<body>
+    <div class="overlay-form">
+        <div class="close-btn" onclick="toggleForm()">&times;</div>
+        <h1>Create New Event</h1>
+        <form>
+            <fieldset>
+                <legend>Event Details</legend>
+                <label >Event Name</label>
+                <input type="text" id="eventName" class="form-element">
+                <label >Event_Description</label>
+                <input type="text" id="eventDesc" class="form-element">
+                <label >Event Fee</label>
+                <input type="number" id="eventFee" class="form-element">
+                <label >Event Date</label>
+                <input type="date" id="eventDate" class="form-element">
+                <label >Event Date</label>
+                <input type="time" id="eventTime" class="form-element">
+                <label >Event Venue</label>
+                <input type="text" id="eventVenue" class="form-element">
+            </fieldset>
+                <label >Organizing Team Name</label>
+                <input type="text" id="OrgTeam" class="form-element">
+                
+                <fieldset>
+                    <legend>Coordinator :1</legend>
+                    <label >Name</label>
+                    <input type="text" id="org-name" class="form-element">
+                    <label >Mobile No</label>
+                    <input type="text" id="org-mob" class="form-element">
+                    <label >Email Id</label>
+                    <input type="email" id="org-email" class="form-element">
+                </fieldset>
+                <fieldset>
+                    <legend>Coordinator :2</legend>
+                    <label >Name</label>
+                    <input type="text" id="org-name2" class="form-element">
+                    <label >Mobile No</label>
+                    <input type="text" id="org-mob2" class="form-element">
+                    <label >Email Id</label>
+                    <input type="email" id="org-email2" class="form-element">
+                </fieldset>
+            
+        </form>
+</div>
+
+</body>
+</html>
