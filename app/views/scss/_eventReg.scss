@@ -1,0 +1,55 @@
+h1{
+    color: #eee;
+}
+
+legend{
+    color:#eee;
+    font-size: 22px;
+    font-weight: 200;
+}
+
+
+.overlay-form{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,.8);
+    z-index: -1;
+    opacity: 1;
+    padding:60px 100px;
+    box-sizing: border-box;
+
+}
+.close-btn{   
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+input.form-element{
+    display: block;
+    margin: 10px 0;
+}
+
+.overlay-form label{
+    display: block;
+    font-size: 17px;
+    color: #eee;
+    
+}
+
+.overlay-form input{
+    width: 90%;
+    padding:6px;
+    font-size: 17px;
+    border: 2px solid #eee;
+    background: transparent;
+    outline: none;
+    border-radius: 10px;
+}
