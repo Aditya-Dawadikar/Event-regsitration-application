@@ -29,9 +29,21 @@ exports.login = (req, res, next) => {
                             expiresIn: "1h"
                         }
                     );
+                    /*
+                    const refreshToken = jwt.sign({
+                        email: doc[0].Admin_email,
+                        docId: doc[0]._id,
+                        token: token,
+                        role: "admin"
+                        }, 
+                        jwt_key, {
+                        expiresIn: 60 * 10
+                    });
+                    */
                     return res.status(200).json({
                         message: "Auth successful",
-                        token: token
+                        token: token,
+                        refreshToken: refreshToken
                     });
                 }
                 res.status(401).json({
@@ -110,3 +122,32 @@ exports.deleteAdmin = (req, res, next) => {
             });
         })
 }
+
+/*
+exports.sendToken = (req, res, next) => {
+    try {
+        const send = "";
+        const refreshToken = req.headers.authorization.split(" ")[2];
+        const decoded = jwt.verify(refreshToken, jwt_key);
+        const decoded_token = jwt.decode(refreshToken);
+        const token = jwt.sign({
+                email: jwt.decode(req.headers.authorization.split(" ")[0]).email,
+                docId: jwt.decode(req.headers.authorization.split(" ")[0]).docId,
+                role: jwt.decode(req.headers.authorization.split(" ")[0]).role
+            },
+            jwt_key, {
+                expiresIn: 600
+            }
+        );
+        send = token;
+        console.log(send);
+        res.status(200).json({
+            refreshToken: send
+        });
+    } catch (err) {
+        res.status(401).json({
+            error: err
+        });
+    };
+
+}*/
