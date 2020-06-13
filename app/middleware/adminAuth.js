@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const jwt_key = "mykey";
-const jwt_decode = require('jwt-decode');
 
 module.exports = (req, res, next) => {
     try {
@@ -11,7 +10,7 @@ module.exports = (req, res, next) => {
             throw new Error();
         }
     } catch (err) {
-        res.status(401).json({
+        return res.status(401).json({
             message: "auth failed"
         });
     }

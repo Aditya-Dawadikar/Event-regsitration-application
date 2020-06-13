@@ -12,7 +12,7 @@ router.post('/signup', volunteerController.signUp);
 //CRUD
 router.patch('/:id', volunteerController.patchById);
 
-router.delete('/:id', volunteerController.deleteById);
+router.delete('/:id', adminAuth, volunteerController.deleteById);
 
 
 module.exports = router;

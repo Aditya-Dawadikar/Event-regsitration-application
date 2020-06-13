@@ -127,8 +127,8 @@ exports.sendMailToAllVolunteers = (req, res, next) => {
 
 exports.getAllTeamEmails = (req, res, next) => {
     Team.find()
-        .exec()
         .select('Team_details.Team_Leader.Leader_email')
+        .exec()
         .then(docs => {
             var emailsRecipients = docs[0].Team_details.Team_Leader.Leader_email + ',';
             var team_email = "";

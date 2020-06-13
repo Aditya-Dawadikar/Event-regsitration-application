@@ -8,7 +8,7 @@ router.post('/', teamController.createNewTeam);
 
 router.delete('/', teamController.deleteAll);
 
-router.get('/:id', teamController.getById);
+router.get('/:id', volunteerAuth, teamController.getById);
 
 router.patch('/:id', teamController.patchById);
 
