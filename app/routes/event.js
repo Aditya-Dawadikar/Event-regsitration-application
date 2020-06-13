@@ -9,7 +9,7 @@ router.post('/', adminAuth, eventHandler.createEvent);
 
 router.delete('/', adminAuth, eventHandler.deleteAll);
 
-router.get('/:id', eventHandler.getById);
+router.get('/:id', volunteerAuth, eventHandler.getById);
 
 router.patch('/:id', adminAuth, eventHandler.patchById);
 
