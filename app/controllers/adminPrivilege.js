@@ -1,6 +1,5 @@
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
-//const jwt_decoder = require('jwt-decode');
 const Team = require('../models/team');
 const Volunteer = require('../models/volunteer');
 

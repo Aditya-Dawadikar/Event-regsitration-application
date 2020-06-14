@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Volunteer = require('../models/volunteer');
 const jwt = require('jsonwebtoken');
-const jwt_key = "mykey";
 
 exports.login = (req, res, next) => {
     Volunteer.find({ Volunteer_email: req.body.Volunteer_email })
@@ -25,7 +24,7 @@ exports.login = (req, res, next) => {
                             userId: doc[0]._id,
                             role: "volunteer"
                         },
-                        jwt_key, {
+                        process.env.JWT_KEY, {
                             expiresIn: "1h"
                         }
                     );

@@ -2,12 +2,16 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const cors = require('cors');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const app = express();
 
 //connect to database
+const connectionString = 'mongodb+srv://event:' + process.env.DB_PASSWORD + '@project-cluster-a7qik.mongodb.net/<dbname>?retryWrites=true&w=majority';
+
 mongoose.connect(
-    'mongodb+srv://event:event@project-cluster-a7qik.mongodb.net/<dbname>?retryWrites=true&w=majority', {
+    connectionString, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     }
@@ -19,7 +23,7 @@ const volunteerRoutes = require("./app/routes/volunteer");
 const eventRoutes = require("./app/routes/event");
 const teamRoutes = require("./app/routes/team");
 const overviewRoutes = require("./app/routes/overview");
-//const tokenRoutes = require("./app/routes/token");
+const tokenRoutes = require("./app/routes/token");
 
 //middleware
 app.use(cors());
@@ -32,7 +36,7 @@ app.use('/volunteer', volunteerRoutes);
 app.use('/event', eventRoutes);
 app.use('/team', teamRoutes);
 app.use('/overview', overviewRoutes);
-//app.use('/token', tokenRoutes);
+app.use('/token', tokenRoutes);
 
 //listen to port
 app.listen(3000, () => {

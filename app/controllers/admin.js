@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Admin = require('../models/admin');
 const jwt = require('jsonwebtoken');
-const jwt_key = "mykey";
+const TokenModel = require('../models/token');
 
 exports.login = (req, res, next) => {
     Admin.find({ Admin_email: req.body.Admin_email })
@@ -25,21 +25,32 @@ exports.login = (req, res, next) => {
                             docId: doc[0]._id,
                             role: "admin"
                         },
-                        jwt_key, {
-                            expiresIn: "1h"
+                        process.env.JWT_KEY, {
+                            expiresIn: 60
                         }
                     );
-                    /*
+
                     const refreshToken = jwt.sign({
-                        email: doc[0].Admin_email,
-                        docId: doc[0]._id,
-                        token: token,
-                        role: "admin"
-                        }, 
-                        jwt_key, {
-                        expiresIn: 60 * 10
-                    });
-                    */
+                            email: doc[0].Admin_email,
+                            docId: doc[0]._id,
+                            role: "admin"
+                        },
+                        process.env.JWT_REFRESH_KEY, {
+                            expiresIn: 60 * 10
+                        });
+
+                    //save refresh token
+                    const tokenObject = new TokenModel({
+                        refresh_token: refreshToken
+                    })
+                    tokenObject.save(tokenObject)
+                        .catch(err => {
+                            return res.status(401).json({
+                                error: err
+                            })
+                        });
+
+                    //return response
                     return res.status(200).json({
                         message: "Auth successful",
                         token: token,
@@ -56,6 +67,45 @@ exports.login = (req, res, next) => {
                 error: err
             });
         })
+}
+
+exports.sendToken = (req, res, next) => {
+    try {
+        const refreshToken = req.body.refreshToken;
+        const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, user) => {
+            if (err) {
+                res.status(401).json({
+                    error: err
+                });
+            }
+            TokenModel.find({ refresh_token: refreshToken })
+                .exec()
+                .then(doc => {
+                    const newToken = jwt.sign({
+                            email: req.body.email,
+                            docId: req.body.docId,
+                            role: req.body.role
+                        },
+                        process.env.JWT_KEY, {
+                            expiresIn: 600
+                        });
+
+                    res.status(200).json({
+                        newToken: newToken
+                    })
+                })
+                .catch(err => {
+                    res.status(400).json({
+                        error: err
+                    });
+                })
+        });
+    } catch (err) {
+        res.status(401).json({
+            error: err
+        });
+    };
+
 }
 
 exports.signUp = (req, res, next) => {
@@ -122,32 +172,3 @@ exports.deleteAdmin = (req, res, next) => {
             });
         })
 }
-
-/*
-exports.sendToken = (req, res, next) => {
-    try {
-        const send = "";
-        const refreshToken = req.headers.authorization.split(" ")[2];
-        const decoded = jwt.verify(refreshToken, jwt_key);
-        const decoded_token = jwt.decode(refreshToken);
-        const token = jwt.sign({
-                email: jwt.decode(req.headers.authorization.split(" ")[0]).email,
-                docId: jwt.decode(req.headers.authorization.split(" ")[0]).docId,
-                role: jwt.decode(req.headers.authorization.split(" ")[0]).role
-            },
-            jwt_key, {
-                expiresIn: 600
-            }
-        );
-        send = token;
-        console.log(send);
-        res.status(200).json({
-            refreshToken: send
-        });
-    } catch (err) {
-        res.status(401).json({
-            error: err
-        });
-    };
-
-}*/
