@@ -2,16 +2,17 @@ const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const Team = require('../models/team');
 const Volunteer = require('../models/volunteer');
+const jwt_decoder = require('jwt-decode');
 
 exports.sendMailToAllTeams = (req, res, next) => {
 
     const token = req.headers.authorization;
-    const decoded = jwt.decoder(token);
+    //const decoded = jwt.decoder(token);
 
     const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-            user: decoded.email,
+            user: req.body.email,
             pass: req.body.pass
         }
     });
@@ -38,7 +39,7 @@ exports.sendMailToAllTeams = (req, res, next) => {
 
             //email details
             const email_option = {
-                from: decoded.email,
+                from: req.body.email,
                 to: team_email,
                 subject: req.body.subject,
                 text: req.body.text,
@@ -67,18 +68,18 @@ exports.sendMailToAllTeams = (req, res, next) => {
 exports.sendMailToAllVolunteers = (req, res, next) => {
 
     const token = req.headers.authorization;
-    const decoded = jwt_decoder(token);
+    //const decoded = jwt_decoder(token);
 
     const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-            user: decoded.email,
+            user: req.body.email,
             pass: req.body.pass
         }
     });
 
     //find team emails
-    Team.find()
+    Volunteer.find()
         .exec()
         .then(docs => {
 
@@ -96,10 +97,12 @@ exports.sendMailToAllVolunteers = (req, res, next) => {
                     emailsRecipients = volunteer_email;
                 }
             }
-
+            if (docs.length === 1) {
+                volunteer_email = docs[0].Volunteer_email;
+            }
             //email details
             const email_option = {
-                from: decoded.email,
+                from: req.body.email,
                 to: volunteer_email,
                 subject: req.body.subject,
                 text: req.body.text,
