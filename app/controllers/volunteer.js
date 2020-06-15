@@ -9,28 +9,36 @@ exports.login = (req, res, next) => {
         .then(doc => {
             if (doc.lenght < 1) {
                 return res.status(401).json({
-                    message: "Auth failed"
+                    message: "email not found"
                 });
             }
             bcrypt.compare(req.body.Volunteer_password, doc[0].Volunteer_password, (err, result) => {
                 if (err) {
                     return res.status(401).json({
-                        message: "Auth failed"
+                        message: "password doesnt match"
                     });
                 }
                 if (result) {
                     const token = jwt.sign({
                             email: doc[0].Volunteer_email,
-                            userId: doc[0]._id,
                             role: "volunteer"
                         },
                         process.env.JWT_KEY, {
-                            expiresIn: "1h"
+                            expiresIn: 60 * 5
                         }
                     );
-                    return res.status(200).json({
-                        message: "Auth successfull",
-                        token: token
+
+                    const refreshToken = jwt.sign({
+                        email: doc[0].Volunteer_email,
+                        role: "volunteer"
+                    }, process.env.JWT_REFRESH_KEY, {
+                        expiresIn: 60 * 10
+                    })
+
+                    res.status(200).json({
+                        message: "login successfull",
+                        token: token,
+                        refreshToken: refreshToken
                     });
                 }
             });
@@ -41,6 +49,30 @@ exports.login = (req, res, next) => {
                 error: err
             });
         });
+}
+
+exports.sendToken = (req, res, next) => {
+    const refreshToken = req.body.refreshToken;
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, user) => {
+        if (err) {
+            res.status(401).json({
+                error: err
+            });
+        }
+        if (user) {
+            const newToken = jwt.sign({
+                    email: req.body.email,
+                    role: "volunteer"
+                },
+                process.env.JWT_KEY, {
+                    expiresIn: 60 * 5
+                });
+
+            res.status(200).json({
+                newToken: newToken
+            })
+        }
+    });
 }
 
 exports.signUp = (req, res, next) => {
