@@ -24,6 +24,7 @@ const eventRoutes = require("./app/routes/event");
 const teamRoutes = require("./app/routes/team");
 const overviewRoutes = require("./app/routes/overview");
 const tokenRoutes = require("./app/routes/token");
+const exportRoutes = require("./app/routes/export");
 
 //middleware
 app.use(cors());
@@ -37,6 +38,7 @@ app.use('/event', eventRoutes);
 app.use('/team', teamRoutes);
 app.use('/overview', overviewRoutes);
 app.use('/token', tokenRoutes);
+app.use('/export', exportRoutes);
 
 //listen to port
 app.listen(3000, () => {
