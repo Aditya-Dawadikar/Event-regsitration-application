@@ -11,28 +11,117 @@ const client = new google.auth.JWT(
     keys.private_key, ['https://www.googleapis.com/auth/spreadsheets']
 );
 
-exports.exportEvents = (req, res) => {
+exports.exportVolunteers = (req, res) => {
+    Volunteer.find()
+        .exec()
+        .then(docs => {
+            let data = new Array();
+            for (let i = 0; i < docs.length; i++) {
+                let row = [
+                    docs[i]._id,
+                    docs[i].Volunteer_name,
+                    docs[i].Volunteer_email,
+                    docs[i].Volunteer_phone,
+                    docs[i].Volunteer_class,
+                    docs[i].Volunteer_division
+                ]
+                data.push(row);
+            }
+            client.authorize(function(err, tokens) {
+                if (err) {
+                    console.log(err);
+                    return;
+                } else {
+                    console.log('connected');
+                    gsrun(client);
+                }
+            });
 
+            async function gsrun(cl) {
+                const gsapi = google.sheets({ version: 'v4', auth: cl });
+                const updateOps = {
+                    spreadsheetId: '1iC7OUFAXf9jHz4bE5_qtBM5MQ5cJkHXICcPXJOXqSes',
+                    range: 'Volunteers!A2',
+                    valueInputOption: 'USER_ENTERED',
+                    resource: { values: data }
+                };
+                let response = await gsapi.spreadsheets.values.update(updateOps);
+                console.log(response);
+            }
+            console.log(data);
+            res.status(200).json({
+                message: "exporting data"
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            });
+        })
+}
+
+
+exports.exportTeams = (req, res) => {
+    Team.find()
+        .exec()
+        .then(docs => {
+            let data = new Array();
+            for (let i = 0; i < docs.length; i++) {
+                let row = [
+                    docs[i]._id,
+                    docs[i].Team_details.Team_Leader.Leader_name,
+                    docs[i].Team_details.Team_Leader.Leader_email,
+                    docs[i].Team_details.Team_Leader.Leader_phone,
+                    docs[i].Team_details.Team_Leader.Alternative_phone,
+                    docs[i].Team_details.Event.Event_name,
+                    docs[i].Team_details.Event.Event_id,
+                    docs[i].Team_details.Payment.payment_method,
+                    docs[i].Team_details.Payment.payment_status,
+                    docs[i].Team_details.Team_name,
+                    docs[i].Team_details.Team_Member_count,
+                    docs[i].Team_details.Registration_date
+                ]
+                data.push(row);
+            }
+            client.authorize(function(err, tokens) {
+                if (err) {
+                    console.log(err);
+                    return;
+                } else {
+                    console.log('connected');
+                    gsrun(client);
+                }
+            });
+
+            async function gsrun(cl) {
+                const gsapi = google.sheets({ version: 'v4', auth: cl });
+                const updateOps = {
+                    spreadsheetId: '1iC7OUFAXf9jHz4bE5_qtBM5MQ5cJkHXICcPXJOXqSes',
+                    range: 'Teams!A2',
+                    valueInputOption: 'USER_ENTERED',
+                    resource: { values: data }
+                };
+                let response = await gsapi.spreadsheets.values.update(updateOps);
+                console.log(response);
+            }
+            console.log(data);
+            res.status(200).json({
+                message: "exporting data"
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            });
+        })
+}
+
+exports.exportEvents = (req, res) => {
     Event.find()
         .exec()
         .then(docs => {
             let data = new Array();
             for (let i = 0; i < docs.length; i++) {
-                /*let spocCount = doc[i].Event_Organizer.Spoc_Count;
-                let spoc_member = docs[i].Event_Organizer.Spoc[0].Spoc_name;
-                let spoc = "";
-                if (i != (docs.length - 1)) {
-                    for (let j = 1; j < spocCount; j++) {
-                        spoc = spoc_member.concat(docs[i].Event_Organizer.Spoc[j].Spoc_name);
-                        spoc_member = spoc;
-                        spoc = spoc_member.concat(',');
-                        spoc_member = spoc;
-                    }
-                } else {
-                    spoc = spoc_member.concat(docs[i].Event_Organizer.Spoc[j].Spoc_name);
-                    spoc_member = spoc;
-                }*/
-
                 let row = [
                     docs[i]._id,
                     docs[i].Event_name,
@@ -62,7 +151,7 @@ exports.exportEvents = (req, res) => {
                 const gsapi = google.sheets({ version: 'v4', auth: cl });
                 const updateOps = {
                     spreadsheetId: '1iC7OUFAXf9jHz4bE5_qtBM5MQ5cJkHXICcPXJOXqSes',
-                    range: 'Sheet1!A2',
+                    range: 'Events!A2',
                     valueInputOption: 'USER_ENTERED',
                     resource: { values: data }
                 };
