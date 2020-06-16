@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 
 //connect to database
-const connectionString = 'mongodb+srv://event:' + process.env.DB_PASSWORD + '@project-cluster-a7qik.mongodb.net/<dbname>?retryWrites=true&w=majority';
+const connectionString = process.env.DB_CONNECTION_STRING;
 
 mongoose.connect(
     connectionString, {
