@@ -19,11 +19,5 @@ router.get('/email/teams', adminAuth, adminPrivilegeController.getAllTeamEmails)
 
 router.get('/contact/teams', adminAuth, adminPrivilegeController.getAllTeamContacts);
 
-//third party services
-router.post('/emailTeams', adminAuth, adminPrivilegeController.sendMailToAllTeams);
-
-router.post('/emailTeams/:eventId', adminPrivilegeController.sendMailToTeamsByEventId);
-
-router.post('/emailVolunteers', adminAuth, adminPrivilegeController.sendMailToAllVolunteers);
 
 module.exports = router;

@@ -40,7 +40,7 @@ exports.exportVolunteers = (req, res) => {
             async function gsrun(cl) {
                 const gsapi = google.sheets({ version: 'v4', auth: cl });
                 const updateOps = {
-                    spreadsheetId: '1iC7OUFAXf9jHz4bE5_qtBM5MQ5cJkHXICcPXJOXqSes',
+                    spreadsheetId: req.body.spreadsheetId,
                     range: 'Volunteers!A2',
                     valueInputOption: 'USER_ENTERED',
                     resource: { values: data }
@@ -96,7 +96,7 @@ exports.exportTeams = (req, res) => {
             async function gsrun(cl) {
                 const gsapi = google.sheets({ version: 'v4', auth: cl });
                 const updateOps = {
-                    spreadsheetId: '1iC7OUFAXf9jHz4bE5_qtBM5MQ5cJkHXICcPXJOXqSes',
+                    spreadsheetId: req.body.spreadsheetId,
                     range: 'Teams!A2',
                     valueInputOption: 'USER_ENTERED',
                     resource: { values: data }
@@ -150,7 +150,7 @@ exports.exportEvents = (req, res) => {
             async function gsrun(cl) {
                 const gsapi = google.sheets({ version: 'v4', auth: cl });
                 const updateOps = {
-                    spreadsheetId: '1iC7OUFAXf9jHz4bE5_qtBM5MQ5cJkHXICcPXJOXqSes',
+                    spreadsheetId: req.body.spreadsheetId,
                     range: 'Events!A2',
                     valueInputOption: 'USER_ENTERED',
                     resource: { values: data }

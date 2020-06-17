@@ -25,6 +25,8 @@ const teamRoutes = require("./app/routes/team");
 const overviewRoutes = require("./app/routes/overview");
 const tokenRoutes = require("./app/routes/token");
 const exportRoutes = require("./app/routes/export");
+const emailRoutes = require("./app/routes/email");
+const resetPasswordRoutes = require('./app/routes/resetPassword');
 
 //middleware
 app.use(cors());
@@ -39,6 +41,8 @@ app.use('/team', teamRoutes);
 app.use('/overview', overviewRoutes);
 app.use('/token', tokenRoutes);
 app.use('/export', exportRoutes);
+app.use('/email', emailRoutes);
+app.use('/reset', resetPasswordRoutes);
 
 //listen to port
 app.listen(3000, () => {
