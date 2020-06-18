@@ -4,12 +4,9 @@ const resetPasswordController = require('../controllers/resetPassword.js');
 const resetAuth = require('../middleware/resetAuth');
 
 //admin logic
-router.get('/admin/forgotpassword', resetPasswordController.sendAdminVerificationcode);
-router.post('/admin/forgotpassword/verify', resetPasswordController.verifyCode);
+router.get('/forgotpassword', resetPasswordController.sendVerificationcode);
+router.post('/forgotpassword/verify', resetPasswordController.verifyCode);
 router.post('/admin/forgotpassword/updatePassword', resetAuth, resetPasswordController.updateAdminPassword);
-
-router.get('/volunteer/forgotpassword', resetPasswordController.sendVolunteerVerificationcode);
-router.post('/volunteer/forgotpassword/verify', resetPasswordController.verifyCode);
-router.post('/volunteer/forgotpassword/updatePassword', resetPasswordController.updateVolunteerPassword);
+router.post('/volunteer/forgotpassword/updatePassword', resetAuth, resetPasswordController.updateVolunteerPassword);
 
 module.exports = router;

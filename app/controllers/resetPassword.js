@@ -5,9 +5,9 @@ const ResetPasswordCode = require('../models/resetPasswordCode');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-exports.sendAdminVerificationcode = (req, res, next) => {
+exports.sendVerificationcode = (req, res, next) => {
     const email = req.body.email;
-    const code = Math.floor(Math.random() * 10000000 + 1);
+    const code = Math.floor(Math.random() * 1000000 + 1);
     const verificationCode = new ResetPasswordCode({
         verificationCode: code
     });
@@ -53,15 +53,32 @@ exports.updateAdminPassword = (req, res, next) => {
     });
 }
 
-exports.sendVolunteerVerificationcode = (req, res, next) => {
-    res.status(200).json({
-        message: "sending Volunteer verification code"
-    });
-}
-
 exports.updateVolunteerPassword = (req, res, next) => {
-    res.status(200).json({
-        message: "updating volunteer password"
+    const email = req.body.email;
+    const updatedPassword = req.body.updatedPassword;
+    bcrypt.hash(updatedPassword, 10, (err, result) => {
+        if (err) {
+            console.log(err);
+            return res.status(200).json({
+                error: err
+            });
+        }
+        Volunteer.findOneAndUpdate({ Volunteer_email: email }, { $set: { Volunteer_password: result } }, { useFindAndModify: false })
+            .exec()
+            .then(result => {
+                res.status(200).json({
+                    message: "update successful",
+                    result: result
+                });
+                //console.log("update successful");
+                //console.log(result);
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(200).json({
+                    error: err
+                })
+            });
     });
 }
 
