@@ -26,7 +26,7 @@ exports.sendAdminVerificationcode = (req, res, next) => {
 
 exports.updateAdminPassword = (req, res, next) => {
     const email = req.body.email;
-    const updatedPassword = req.body.updatedEmail;
+    const updatedPassword = req.body.updatedPassword;
     bcrypt.hash(updatedPassword, 10, (err, result) => {
         if (err) {
             console.log(err);
@@ -34,15 +34,15 @@ exports.updateAdminPassword = (req, res, next) => {
                 error: err
             });
         }
-        Admin.findByIdAndUpdate({ Admin_email: email }, { $set: { Admin_password: result } })
+        Admin.findOneAndUpdate({ Admin_email: email }, { $set: { Admin_password: result } }, { useFindAndModify: false })
             .exec()
-            .then(res => {
+            .then(result => {
                 res.status(200).json({
                     message: "update successful",
-                    result: res
+                    result: result
                 });
-                console.log("update successful");
-                console.log(res);
+                //console.log("update successful");
+                //console.log(result);
             })
             .catch(err => {
                 console.log(err);
