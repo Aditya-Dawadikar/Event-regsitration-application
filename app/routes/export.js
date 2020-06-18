@@ -3,8 +3,8 @@ const router = express.Router();
 const adminAuth = require('../middleware/adminAuth');
 const exportsController = require('../controllers/export');
 
-router.get('/events', exportsController.exportEvents);
-router.get('/teams', exportsController.exportTeams);
-router.get('/volunteers', exportsController.exportVolunteers);
+router.get('/events', adminAuth, exportsController.exportEvents);
+router.get('/teams', adminAuth, exportsController.exportTeams);
+router.get('/volunteers', adminAuth, exportsController.exportVolunteers);
 
 module.exports = router;

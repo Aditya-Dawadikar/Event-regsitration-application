@@ -24,6 +24,42 @@ exports.sendVerificationcode = (req, res, next) => {
     });
 }
 
+exports.verifyCode = (req, res, next) => {
+    const token = jwt.sign({
+            email: req.body.email
+        },
+        process.env.JWT_KEY, {
+            expiresIn: 60 * 10
+        });
+
+    ResetPasswordCode.find({ verificationCode: req.body.verificationCode })
+        .exec()
+        .then(result => {
+            if (result.length < 1) {
+                return res.status(404).json({
+                    message: "wrong verification code"
+                })
+            } else {
+                res.status(200).json({
+                    result: result,
+                    token: token,
+                    message: "user verified"
+                });
+                ResetPasswordCode.findByIdAndDelete(result[0]._id)
+                    .exec()
+                    .then(result => {
+                        console.log("verification code from database cleared");
+                    })
+                    .catch(err => {
+                        error: err
+                    })
+            }
+        })
+        .catch(err => {
+            error: err
+        })
+}
+
 exports.updateAdminPassword = (req, res, next) => {
     const email = req.body.email;
     const updatedPassword = req.body.updatedPassword;
@@ -80,40 +116,4 @@ exports.updateVolunteerPassword = (req, res, next) => {
                 })
             });
     });
-}
-
-exports.verifyCode = (req, res, next) => {
-    const token = jwt.sign({
-            email: req.body.email
-        },
-        process.env.JWT_KEY, {
-            expiresIn: 60 * 10
-        });
-
-    ResetPasswordCode.find({ verificationCode: req.body.verificationCode })
-        .exec()
-        .then(result => {
-            if (result.length < 1) {
-                return res.status(404).json({
-                    message: "wrong verification code"
-                })
-            } else {
-                res.status(200).json({
-                    result: result,
-                    token: token,
-                    message: "user verified"
-                });
-                ResetPasswordCode.findByIdAndDelete(result[0]._id)
-                    .exec()
-                    .then(result => {
-                        console.log("verification code from database cleared");
-                    })
-                    .catch(err => {
-                        error: err
-                    })
-            }
-        })
-        .catch(err => {
-            error: err
-        })
 }

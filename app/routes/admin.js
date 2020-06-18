@@ -19,5 +19,9 @@ router.get('/email/teams', adminAuth, adminPrivilegeController.getAllTeamEmails)
 
 router.get('/contact/teams', adminAuth, adminPrivilegeController.getAllTeamContacts);
 
+router.get('/email/Volunteers', adminAuth, adminPrivilegeController.getAllVolunteerEmails);
+
+router.get('/contact/Volunteers', adminAuth, adminPrivilegeController.getAllVolunteerContacts);
+
 
 module.exports = router;

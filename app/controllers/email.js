@@ -2,7 +2,6 @@ const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const Team = require('../models/team');
 const Volunteer = require('../models/volunteer');
-//const jwt_decoder = require('jwt-decode');
 
 exports.sendVerificationEmail = function(email, code) {
     const transporter = nodemailer.createTransport({

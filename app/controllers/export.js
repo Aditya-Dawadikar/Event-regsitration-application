@@ -60,7 +60,6 @@ exports.exportVolunteers = (req, res) => {
         })
 }
 
-
 exports.exportTeams = (req, res) => {
     Team.find()
         .exec()
