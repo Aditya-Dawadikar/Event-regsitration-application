@@ -5,19 +5,19 @@ const Volunteer = require('../models/volunteer');
 
 exports.getAllTeamEmails = (req, res, next) => {
     Team.find()
-        .select('Team_details.Team_Leader.Leader_email')
+        .select('Team_Leader.Leader_email')
         .exec()
         .then(docs => {
-            var emailsRecipients = docs[0].Team_details.Team_Leader.Leader_email + ',';
+            var emailsRecipients = docs[0].Team_Leader.Leader_email + ',';
             var team_email = "";
             for (i = 1; i < docs.length; i++) {
                 if (i != (docs.length - 1)) {
-                    team_email = emailsRecipients.concat(docs[i].Team_details.Team_Leader.Leader_email);
+                    team_email = emailsRecipients.concat(docs[i].Team_Leader.Leader_email);
                     emailsRecipients = team_email;
                     team_email = emailsRecipients.concat(',');
                     emailsRecipients = team_email;
                 } else {
-                    team_email = emailsRecipients.concat(docs[i].Team_details.Team_Leader.Leader_email);
+                    team_email = emailsRecipients.concat(docs[i].Team_Leader.Leader_email);
                     emailsRecipients = team_email;
                 }
             }
@@ -36,21 +36,21 @@ exports.getAllTeamEmails = (req, res, next) => {
 
 exports.getAllTeamContacts = (req, res, next) => {
     Team.find()
-        .select('Team_details.Team_Leader.Leader_phone')
+        .select('Team_Leader.Leader_phone')
         .exec()
         .then(docs => {
             /*
             //string of contacts
-            var contacts = docs[0].Team_details.Team_Leader.Leader_phone + ',';
+            var contacts = docs[0].Team_Leader.Leader_phone + ',';
             var team_contact = "";
             for (i = 1; i < docs.length; i++) {
                 if (i != (docs.length - 1)) {
-                    team_contact = contacts.concat(docs[i].Team_details.Team_Leader.Leader_phone);
+                    team_contact = contacts.concat(docs[i].Team_Leader.Leader_phone);
                     contacts = team_contact;
                     team_contact = contacts.concat(',');
                     contacts = team_contact;
                 } else {
-                    team_contact = contacts.concat(docs[i].Team_details.Team_Leader.Leader_phone);
+                    team_contact = contacts.concat(docs[i].Team_Leader.Leader_phone);
                     contacts = team_contact;
                 }
             }
@@ -63,7 +63,7 @@ exports.getAllTeamContacts = (req, res, next) => {
             //array of contacts
             const contacts = new Array();
             for (let i = 0; i < docs.length; i++) {
-                contacts.push(docs[i].Team_details.Team_Leader.Leader_phone);
+                contacts.push(docs[i].Team_Leader.Leader_phone);
             }
             res.status(200).json({
                 message: "found all contacts",

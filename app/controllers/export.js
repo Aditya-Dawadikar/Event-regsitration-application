@@ -68,17 +68,17 @@ exports.exportTeams = (req, res) => {
             for (let i = 0; i < docs.length; i++) {
                 let row = [
                     docs[i]._id,
-                    docs[i].Team_details.Team_Leader.Leader_name,
-                    docs[i].Team_details.Team_Leader.Leader_email,
-                    docs[i].Team_details.Team_Leader.Leader_phone,
-                    docs[i].Team_details.Team_Leader.Alternative_phone,
-                    docs[i].Team_details.Event.Event_name,
-                    docs[i].Team_details.Event.Event_id,
-                    docs[i].Team_details.Payment.payment_method,
-                    docs[i].Team_details.Payment.payment_status,
-                    docs[i].Team_details.Team_name,
-                    docs[i].Team_details.Team_Member_count,
-                    docs[i].Team_details.Registration_date
+                    docs[i].Team_Leader.Leader_name,
+                    docs[i].Team_Leader.Leader_email,
+                    docs[i].Team_Leader.Leader_phone,
+                    docs[i].Team_Leader.Alternative_phone,
+                    docs[i].Event.Event_name,
+                    docs[i].Event.Event_id,
+                    docs[i].Payment.payment_method,
+                    docs[i].Payment.payment_status,
+                    docs[i].Team_name,
+                    docs[i].Team_Member_count,
+                    docs[i].Registration_date
                 ]
                 data.push(row);
             }

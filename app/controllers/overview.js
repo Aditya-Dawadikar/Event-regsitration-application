@@ -39,7 +39,7 @@ exports.visualizeEvents = (req, res, next) => {
 
 exports.getAllTeams = (req, res, next) => {
     Team.find()
-        .select('_id Team_details.Team_name Team_details.Team_Leader.Leader_name Team_details.Event.Event_name')
+        .select('_id Team_name Team_Leader.Leader_name Event.Event_name')
         .exec()
         .then(docs => {
             if (docs.length < 1) {
@@ -51,10 +51,10 @@ exports.getAllTeams = (req, res, next) => {
                 count: docs.length,
                 Teams: docs.map(doc => {
                     return {
-                        Team_name: doc.Team_details.Team_name,
+                        Team_name: doc.Team_name,
                         Team_id: doc._id,
-                        Team_Leader: doc.Team_details.Team_Leader.Leader_name,
-                        Event: doc.Team_details.Event.Event_name,
+                        Team_Leader: doc.Team_Leader.Leader_name,
+                        Event: doc.Event.Event_name,
                         request: {
                             type: 'GET',
                             url: "http://localhost:3000/team/" + doc._id

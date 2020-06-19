@@ -45,7 +45,7 @@ exports.sendMailToTeamsByEventId = (req, res, next) => {
     });
 
     //find team emails
-    Team.find({ "Team_details.Event.Event_id": req.params.eventId })
+    Team.find({ "Event.Event_id": req.params.eventId })
         .exec()
         .then(docs => {
             //extract email from database
@@ -54,16 +54,16 @@ exports.sendMailToTeamsByEventId = (req, res, next) => {
                     message: "not found"
                 });
             }
-            var emailsRecipients = docs[0].Team_details.Team_Leader.Leader_email + ',';
+            var emailsRecipients = docs[0].Team_Leader.Leader_email + ',';
             var team_email = "";
             for (i = 1; i < docs.length; i++) {
                 if (i != (docs.length - 1)) {
-                    team_email = emailsRecipients.concat(docs[i].Team_details.Team_Leader.Leader_email);
+                    team_email = emailsRecipients.concat(docs[i].Team_Leader.Leader_email);
                     emailsRecipients = team_email;
                     team_email = emailsRecipients.concat(',');
                     emailsRecipients = team_email;
                 } else {
-                    team_email = emailsRecipients.concat(docs[i].Team_details.Team_Leader.Leader_email);
+                    team_email = emailsRecipients.concat(docs[i].Team_Leader.Leader_email);
                     emailsRecipients = team_email;
                 }
             }
@@ -113,16 +113,16 @@ exports.sendMailToAllTeams = (req, res, next) => {
         .then(docs => {
 
             //extract email from database
-            var emailsRecipients = docs[0].Team_details.Team_Leader.Leader_email + ',';
+            var emailsRecipients = docs[0].Team_Leader.Leader_email + ',';
             var team_email = "";
             for (i = 1; i < docs.length; i++) {
                 if (i != (docs.length - 1)) {
-                    team_email = emailsRecipients.concat(docs[i].Team_details.Team_Leader.Leader_email);
+                    team_email = emailsRecipients.concat(docs[i].Team_Leader.Leader_email);
                     emailsRecipients = team_email;
                     team_email = emailsRecipients.concat(',');
                     emailsRecipients = team_email;
                 } else {
-                    team_email = emailsRecipients.concat(docs[i].Team_details.Team_Leader.Leader_email);
+                    team_email = emailsRecipients.concat(docs[i].Team_Leader.Leader_email);
                     emailsRecipients = team_email;
                 }
             }

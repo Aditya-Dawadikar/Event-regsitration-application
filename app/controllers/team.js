@@ -4,7 +4,7 @@ const Event = require('../models/event');
 
 exports.createNewTeam = (req, res, next) => {
     //find event id
-    Event.find({ Event_name: req.body.Team_details.Event.Event_name })
+    Event.find({ Event_name: req.body.Event.Event_name })
         .exec()
         .then(doc => {
             const eventId = doc[0]._id;
@@ -12,35 +12,34 @@ exports.createNewTeam = (req, res, next) => {
             const Count = registeredCount + 1;
 
             const members = new Array();
-            for (let i = 0; i < req.body.Team_details.Team_Member_count; i++) {
-                const member = { member_name: req.body.Team_details.Team_Members[i].member_name };
+            for (let i = 0; i < req.body.Team_Member_count; i++) {
+                const member = { member_name: req.body.Team_Members[i].member_name };
                 members.push(member);
             }
 
             //create new object
             const team = new Team({
                 _id: new mongoose.Types.ObjectId(),
-                Team_details: {
-                    Team_name: req.body.Team_details.Team_name,
-                    Team_Leader: {
-                        Leader_name: req.body.Team_details.Team_Leader.Leader_name,
-                        Leader_email: req.body.Team_details.Team_Leader.Leader_email,
-                        Leader_phone: req.body.Team_details.Team_Leader.Leader_phone,
-                        Alternative_phone: req.body.Team_details.Team_Leader.Alternative_phone
-                    },
-                    Team_Member_count: req.body.Team_details.Team_Member_count,
-                    Team_Members: members,
-                    Event: {
-                        Event_name: req.body.Team_details.Event.Event_name,
-                        Event_id: eventId
-                    },
-                    Payment: {
-                        Payment_method: req.body.Team_details.Payment.Payment_method,
-                        Trasaction_Id: req.body.Team_details.Payment.Trasaction_Id,
-                        Payment_status: req.body.Team_details.Payment.Payment_status
-                    },
-                    Registrtion_date: req.body.Team_details.Registrtion_date
-                }
+                Team_name: req.body.Team_name,
+                Team_Leader: {
+                    Leader_name: req.body.Team_Leader.Leader_name,
+                    Leader_email: req.body.Team_Leader.Leader_email,
+                    Leader_phone: req.body.Team_Leader.Leader_phone,
+                    Alternative_phone: req.body.Team_Leader.Alternative_phone
+                },
+                Team_Member_count: req.body.Team_Member_count,
+                Team_Members: members,
+                Event: {
+                    Event_name: req.body.Event.Event_name,
+                    Event_id: eventId
+                },
+                Payment: {
+                    Payment_method: req.body.Payment.Payment_method,
+                    Trasaction_Id: req.body.Payment.Trasaction_Id,
+                    Payment_status: req.body.Payment.Payment_status
+                },
+                Registrtion_date: req.body.Registrtion_date
+
             });
 
             //save
@@ -135,6 +134,11 @@ exports.deleteById = (req, res, next) => {
     Team.findByIdAndDelete(id)
         .exec()
         .then(doc => {
+            if (doc === null) {
+                return res.status(400).json({
+                    message: "not found"
+                });
+            }
             res.status(200).json({
                 message: "Successfully deleted"
             });
