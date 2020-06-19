@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const fs = require('file-system');
 dotenv.config();
 
 const app = express();
@@ -27,13 +28,16 @@ const tokenRoutes = require("./app/routes/token");
 const exportRoutes = require("./app/routes/export");
 const emailRoutes = require("./app/routes/email");
 const resetPasswordRoutes = require('./app/routes/resetPassword');
+const viewsRoutes = require('./app/routes/view');
 
 //middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static('views'));
 
 //middleware to handle routes
+app.use('/', viewsRoutes);
 app.use('/admin', adminRoutes);
 app.use('/volunteer', volunteerRoutes);
 app.use('/event', eventRoutes);
