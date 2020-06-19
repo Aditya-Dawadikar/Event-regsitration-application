@@ -18,7 +18,7 @@ exports.sendVerificationcode = (req, res, next) => {
         });
 
     console.log(verificationCode);
-    //Email.sendVerificationEmail(email, code);
+    Email.sendVerificationEmail(email, code);
     res.status(200).json({
         message: "verification code sent to the given email"
     });

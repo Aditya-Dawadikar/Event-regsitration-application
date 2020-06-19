@@ -11,40 +11,46 @@ exports.login = (req, res, next) => {
                 return res.status(401).json({
                     message: "email not found"
                 });
+            } else {
+                bcrypt.compare(req.body.Admin_password, doc[0].Admin_password, (err, result) => {
+                    //console.log(result);
+                    if (err) {
+                        return res.status(500).json({
+                            error: err
+                        });
+                    }
+                    if (result === true) {
+                        const token = jwt.sign({
+                                email: doc[0].Admin_email,
+                                role: "admin"
+                            },
+                            process.env.JWT_KEY, {
+                                expiresIn: 60 * 20
+                            }
+                        );
+
+                        const refreshToken = jwt.sign({
+                                email: doc[0].Admin_email,
+                                role: "admin"
+                            },
+                            process.env.JWT_REFRESH_KEY, {
+                                expiresIn: 60 * 40
+                            }
+                        );
+
+                        //return response
+                        res.status(200).json({
+                            message: "login successful",
+                            token: token,
+                            refreshToken: refreshToken
+                        });
+                    } else {
+                        return res.status(401).json({
+                            message: "password doesnt match"
+                        });
+                    }
+                });
             }
-            bcrypt.compare(req.body.Admin_password, doc[0].Admin_password, (err, result) => {
-                if (err) {
-                    return res.status(401).json({
-                        message: "password doesnt match0"
-                    });
-                }
-                if (result) {
-                    const token = jwt.sign({
-                            email: doc[0].Admin_email,
-                            role: "admin"
-                        },
-                        process.env.JWT_KEY, {
-                            expiresIn: 60 * 5
-                        }
-                    );
-
-                    const refreshToken = jwt.sign({
-                            email: doc[0].Admin_email,
-                            role: "admin"
-                        },
-                        process.env.JWT_REFRESH_KEY, {
-                            expiresIn: 60 * 10
-                        }
-                    );
-
-                    //return response
-                    res.status(200).json({
-                        message: "login successful",
-                        token: token,
-                        refreshToken: refreshToken
-                    });
-                }
-            });
         })
         .catch(err => {
             res.status(500).json({
@@ -67,7 +73,7 @@ exports.sendToken = (req, res, next) => {
                     role: "admin"
                 },
                 process.env.JWT_KEY, {
-                    expiresIn: 60 * 5
+                    expiresIn: 60 * 20
                 });
 
             res.status(200).json({

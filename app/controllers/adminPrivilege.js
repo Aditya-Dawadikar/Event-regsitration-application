@@ -36,8 +36,8 @@ exports.getAllTeamEmails = (req, res, next) => {
 
 exports.getAllTeamContacts = (req, res, next) => {
     Team.find()
-        .exec()
         .select('Team_details.Team_Leader.Leader_phone')
+        .exec()
         .then(docs => {
             /*
             //string of contacts
@@ -111,8 +111,8 @@ exports.getAllVolunteerEmails = (req, res, next) => {
 
 exports.getAllVolunteerContacts = (req, res, next) => {
     Volunteer.find()
-        .exec()
         .select('Volunteer_phone')
+        .exec()
         .then(docs => {
             /*
             //string of contacts

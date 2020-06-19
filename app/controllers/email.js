@@ -39,8 +39,8 @@ exports.sendMailToTeamsByEventId = (req, res, next) => {
     const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-            user: req.body.email,
-            pass: req.body.pass
+            user: process.env.APPLICATION_EMAIL,
+            pass: process.env.APPLICATION_PASSWORD
         }
     });
 
@@ -48,8 +48,12 @@ exports.sendMailToTeamsByEventId = (req, res, next) => {
     Team.find({ "Team_details.Event.Event_id": req.params.eventId })
         .exec()
         .then(docs => {
-
             //extract email from database
+            if (docs.length < 1) {
+                return res.status(404).json({
+                    message: "not found"
+                });
+            }
             var emailsRecipients = docs[0].Team_details.Team_Leader.Leader_email + ',';
             var team_email = "";
             for (i = 1; i < docs.length; i++) {
@@ -66,7 +70,7 @@ exports.sendMailToTeamsByEventId = (req, res, next) => {
 
             //email details
             const email_option = {
-                from: req.body.email,
+                from: process.env.APPLICATION_EMAIL,
                 to: team_email,
                 subject: req.body.subject,
                 text: req.body.text,
@@ -95,15 +99,11 @@ exports.sendMailToTeamsByEventId = (req, res, next) => {
 }
 
 exports.sendMailToAllTeams = (req, res, next) => {
-
-    const token = req.headers.authorization;
-    //const decoded = jwt.decoder(token);
-
     const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-            user: req.body.email,
-            pass: req.body.pass
+            user: process.env.APPLICATION_EMAIL,
+            pass: process.env.APPLICATION_PASSWORD
         }
     });
 
@@ -129,7 +129,7 @@ exports.sendMailToAllTeams = (req, res, next) => {
 
             //email details
             const email_option = {
-                from: req.body.email,
+                from: process.env.APPLICATION_EMAIL,
                 to: team_email,
                 subject: req.body.subject,
                 text: req.body.text,
@@ -137,6 +137,7 @@ exports.sendMailToAllTeams = (req, res, next) => {
 
             transporter.sendMail(email_option, (err, result) => {
                 if (err) {
+                    console.log(err);
                     return res.status(500).json({
                         error: err
                     });
@@ -149,6 +150,7 @@ exports.sendMailToAllTeams = (req, res, next) => {
             });
         })
         .catch(err => {
+            console.log(err);
             res.status(404).json({
                 error: err
             });
@@ -163,8 +165,8 @@ exports.sendMailToAllVolunteers = (req, res, next) => {
     const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-            user: req.body.email,
-            pass: req.body.pass
+            user: process.env.APPLICATION_EMAIL,
+            pass: process.env.APPLICATION_PASSWORD
         }
     });
 
@@ -192,7 +194,7 @@ exports.sendMailToAllVolunteers = (req, res, next) => {
             }
             //email details
             const email_option = {
-                from: req.body.email,
+                from: process.env.APPLICATION_EMAIL,
                 to: volunteer_email,
                 subject: req.body.subject,
                 text: req.body.text,

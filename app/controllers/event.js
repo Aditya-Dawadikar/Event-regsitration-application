@@ -64,6 +64,27 @@ exports.deleteAll = (req, res, next) => {
         });
 }
 
+exports.getAllEvents = (req, res, next) => {
+    Event.find()
+        .select('-__v')
+        .then(docs => {
+            if (docs.length < 1) {
+                return res.status(400).json({
+                    message: "not found"
+                });
+            }
+            res.status(200).json({
+                Events: docs
+            })
+
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            });
+        });
+}
+
 exports.getById = (req, res, next) => {
     id = req.params.id;
     Event.findById(id)

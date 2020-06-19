@@ -7,7 +7,7 @@ exports.login = (req, res, next) => {
     Volunteer.find({ Volunteer_email: req.body.Volunteer_email })
         .exec()
         .then(doc => {
-            if (doc.lenght < 1) {
+            if (doc.length < 1) {
                 return res.status(401).json({
                     message: "email not found"
                 });
@@ -18,7 +18,7 @@ exports.login = (req, res, next) => {
                         message: "password doesnt match"
                     });
                 }
-                if (result) {
+                if (result === true) {
                     const token = jwt.sign({
                             email: doc[0].Volunteer_email,
                             role: "volunteer"
@@ -40,9 +40,12 @@ exports.login = (req, res, next) => {
                         token: token,
                         refreshToken: refreshToken
                     });
+                } else {
+                    return res.status(401).json({
+                        message: "password doesnt match"
+                    });
                 }
             });
-
         })
         .catch(err => {
             res.status(500).json({

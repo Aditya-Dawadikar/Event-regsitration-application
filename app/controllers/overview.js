@@ -8,9 +8,15 @@ exports.visualizeEvents = (req, res, next) => {
         .select('Event_name Registration.required Registration.registered')
         .exec()
         .then(docs => {
+            if (docs.length < 1) {
+                return res.status(400).json({
+                    message: "not found"
+                });
+            }
             const eventData = new Array();
             for (let i = 0; i < docs.length; i++) {
                 const obj = {
+                    _id: docs[0]._id,
                     Event_name: docs[i].Event_name,
                     required: docs[i].Registration.required,
                     registered: docs[i].Registration.registered
@@ -36,6 +42,11 @@ exports.getAllTeams = (req, res, next) => {
         .select('_id Team_details.Team_name Team_details.Team_Leader.Leader_name Team_details.Event.Event_name')
         .exec()
         .then(docs => {
+            if (docs.length < 1) {
+                return res.status(400).json({
+                    message: "not found"
+                });
+            }
             const resObject = {
                 count: docs.length,
                 Teams: docs.map(doc => {
@@ -65,6 +76,11 @@ exports.getAllVolunteers = (req, res, next) => {
         .select('Volunteer_id Volunteer_name Volunteer_phone')
         .exec()
         .then(docs => {
+            if (docs.length < 1) {
+                return res.status(400).json({
+                    message: "not found"
+                });
+            }
             const resObject = {
                 count: docs.length,
                 volunter: docs.map(doc => {
@@ -88,8 +104,22 @@ exports.getAllAdmins = (req, res, next) => {
     Admin.find()
         .exec()
         .then(docs => {
-            res.status(200).json(docs);
-            console.log(docs);
+            if (docs.length < 1) {
+                return res.status(400).json({
+                    message: "not found"
+                });
+            }
+            const resObject = {
+                count: docs.length,
+                volunter: docs.map(doc => {
+                    return {
+                        Admin_id: doc._id,
+                        Admin_name: doc.Admin_name,
+                        Admin_phone: doc.Admin_phone,
+                    }
+                })
+            }
+            res.status(200).json(resObject);
         })
         .catch(err => {
             res.status(500).json({
