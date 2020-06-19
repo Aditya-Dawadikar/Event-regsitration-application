@@ -11,7 +11,7 @@ exports.createEvent = (req, res, next) => {
         };
         spocs.push(obj);
     }
-    console.log(spocs);
+    //console.log(spocs);
     const event = new Event({
         _id: new mongoose.Types.ObjectId(),
         Event_name: req.body.Event_name,
@@ -126,10 +126,10 @@ exports.patchById = (req, res, next) => {
 
 exports.deleteById = (req, res, next) => {
     id = req.params.id;
-    Event.findById(id)
+    Event.findByIdAndDelete(id)
         .exec()
         .then(doc => {
-            console.log("deleted successfully");
+            //console.log("deleted successfully");
             res.status(200).json({
                 message: "deleted successfully"
             });

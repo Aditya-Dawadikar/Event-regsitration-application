@@ -116,7 +116,7 @@ exports.patchById = (req, res, next) => {
     for (const operations in req.body) {
         updateOperation[operations.propName] = operations.value;
     }
-    Team.update({ _id: id }, { $set: updateOperation })
+    Team.updateOne({ _id: id }, { $set: updateOperation })
         .exec()
         .then(doc => {
             res.status(200).json({
