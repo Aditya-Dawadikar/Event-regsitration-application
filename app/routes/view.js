@@ -1,14 +1,14 @@
 const express = require('express');
-const router = express();
+const app = express();
 const viewController = require('../view');
 
-router.get('/', viewController.indexPage);
-router.get('/login', viewController.loginPage);
-router.get('/adminlogin', viewController.adminLoginPage);
-router.get('/volunteerlogin', viewController.volunteerLoginPage);
-router.get('/adminsignup', viewController.adminSignUpPage);
-router.get('/volunteersignup', viewController.volunteerSignUpPage);
-router.get('/admindashboard', viewController.adminDashBoard);
-router.get('/volunteerdashboard', viewController.volunteerDashBoard);
+app.get('/', viewController.indexPage);
+app.get('/login', viewController.loginPage);
+app.get('/adminlogin', viewController.adminLoginPage);
+app.get('/volunteerlogin', viewController.volunteerLoginPage);
+app.get('/adminsignup', viewController.adminSignUpPage);
+app.get('/volunteersignup', viewController.volunteerSignUpPage);
+app.get('/admindashboard', viewController.adminDashBoard);
+app.get('/volunteerdashboard', viewController.volunteerDashBoard);
 
-module.exports = router;
+module.exports = app;

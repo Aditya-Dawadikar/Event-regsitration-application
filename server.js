@@ -18,6 +18,18 @@ mongoose.connect(
     }
 );
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers',
+        "Origin, X-Requested-with, Control-Type, Accept, Authorization"
+    );
+    if (req.method === 'OPTIONS') {
+        res.header('Access-Control-Allow-Methods', 'PUT, POST, DELETE, GET');
+        return res.status(200).json({});
+    }
+    next();
+});
+
 //require routes
 const adminRoutes = require("./app/routes/admin");
 const volunteerRoutes = require("./app/routes/volunteer");
@@ -36,8 +48,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('views'));
 
+//serving static data
+app.use(express.static('./app/views'));
+
 //middleware to handle routes
-app.use('/', viewsRoutes);
+app.use('/views', viewsRoutes);
 app.use('/admin', adminRoutes);
 app.use('/volunteer', volunteerRoutes);
 app.use('/event', eventRoutes);

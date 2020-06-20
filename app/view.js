@@ -1,5 +1,5 @@
 exports.indexPage = (req, res) => {
-    res.sendFile(__dirname + "/views/index.html");
+    res.redirect('http://localhost:3000/index.html');
 }
 exports.loginPage = (req, res) => {
     res.sendFile(__dirname + "/views/pages/LoginSignup/LoginPage.html");
