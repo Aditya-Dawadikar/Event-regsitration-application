@@ -38,8 +38,10 @@ exports.login = (req, res, next) => {
                     res.status(200).json({
                         message: "login successfull",
                         token: token,
-                        refreshToken: refreshToken
+                        refreshToken: refreshToken,
+                        redirect: "/views/volunteerdashboard"
                     });
+                    //res.redirect('/views/volunteerdashboard');
                 } else {
                     return res.status(401).json({
                         message: "password doesnt match"

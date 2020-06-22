@@ -42,8 +42,13 @@ exports.login = (req, res, next) => {
                         res.status(200).json({
                             message: "login successful",
                             token: token,
-                            refreshToken: refreshToken
-                        });
+                            refreshToken: refreshToken,
+                            redirect: "/views/admindashboard"
+                        })
+
+                        //res.redirect('/views/admindashboard');
+
+
                     } else {
                         return res.status(401).json({
                             message: "password doesnt match"
