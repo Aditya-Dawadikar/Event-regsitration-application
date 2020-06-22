@@ -1,0 +1,25 @@
+{
+    "Team_name": "zlogs",
+    "Team_Leader": {
+        "Leader_name": "Aditya",
+        "Leader_email": "adityadawadikar2000@gmail.com",
+        "Leader_phone": 9850221407,
+        "Alternative_phone": 9881657570
+    },
+    "Team_Member_count": 4,
+    "Team_Members": [
+        {"member_name":"Aditya"},
+        {"member_name":"Ople"},
+        {"member_name":"izac"},
+        {"member_name":"mike"}
+    ],
+    "Event": {
+        "Event_name": "Hackathon"
+    },
+    "Payment": {
+        "Payment_method": "GPay",
+        "Trasaction_Id": "nsjbfba",
+        "Payment_status": "completed"
+    },
+    "Registrtion_date": "2020-06-09T16:00:00Z"
+}
