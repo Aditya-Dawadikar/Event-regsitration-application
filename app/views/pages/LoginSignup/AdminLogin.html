@@ -5,9 +5,9 @@
 
 <body>
     <h3>Admin Login</h3>
-    <form action="./admindashboard">
-        <input type="email" placeholder="email" required></input>
-        <input type="password" placeholder="password" required></input>
+    <form action="/admin/login" method="POST">
+        <input type="email" placeholder="email" name="Admin_email" required></input>
+        <input type="password" placeholder="password" name="Admin_password" required></input>
         <a href="#">Forgot password</a>
         <input type="submit">
     </form>

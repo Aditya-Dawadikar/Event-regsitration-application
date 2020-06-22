@@ -5,9 +5,9 @@
 
 <body>
     <h3>VolunteerLogin</h3>
-    <form action="./volunteerdashboard">
-        <input type="email" placeholder="email" required></input>
-        <input type="password" placeholder="password" required></input>
+    <form action="/volunteer/login" method="POST">
+        <input type="email" placeholder="email" name="Volunteer_email" required></input>
+        <input type="password" placeholder="password" name="Volunteer_password" required></input>
         <a href="#">Forgot password</a>
         <input type="submit">
     </form>
