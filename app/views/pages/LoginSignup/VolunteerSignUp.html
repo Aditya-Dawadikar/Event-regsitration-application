@@ -1,27 +1,59 @@
 <html>
 <header>
     <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 </header>
 
 <body>
     <h3>Volunteer Signup</h3>
     <form action="/volunteer/signup" method="POST">
         <label>Name</label>
-        <input type="text" placeholder="name" name="Volunteer_name" required>
+        <input type="text" placeholder="name" id="name" name="Volunteer_name" required>
         <label>Email</label>
-        <input type="email" placeholder="email" name="Volunteer_email" required>
+        <input type="email" placeholder="email" id="email" name="Volunteer_email" required>
         <label>Password</label>
-        <input type="password" placeholder="password" name="Volunteer_password" required>
+        <input type="password" placeholder="password" id="password" name="Volunteer_password" required>
         <label>Confirm Password</label>
-        <input type="password" placeholder="confirm password" name="confirm_password" required>
+        <input type="password" placeholder="confirm password" id="confirm_password" name="confirm_password" required>
         <label>Phone</label>
-        <input type="text" placeholder="phone" name="Volunteer_phone" required>
+        <input type="text" placeholder="phone" id="phone" name="Volunteer_phone" required>
         <label>Class</label>
-        <input type="text" placeholder="class" name="Volunteer_class" required>
+        <input type="text" placeholder="class" id="class" name="Volunteer_class" required>
         <label>Division</label>
-        <input type="text" placeholder="Division" name="Volunteer_divison" required>
-        <input type="submit">
+        <input type="text" placeholder="Division" id="division" name="Volunteer_divison" required>
     </form>
+    <button type="submit" id="submit">Submit</button>
 </body>
+<script>
+    $(function() {
+        $('#submit').click(function() {
+            var pass = $('#password').val();
+            var cpass = $('#confirm_password').val();
+            if (pass != cpass) {
+                alert('password doesnt match');
+            } else {
+                var url = "/volunteer/signup";
+                var reqObject = {
+                    Volunteer_name: $('#name').val(),
+                    Volunteer_email: $('#email').val(),
+                    Volunteer_password: $('#password').val(),
+                    Volunteer_phone: $('#phone').val(),
+                    Volunteer_class: $('#class').val(),
+                    Volunteer_divison: $('#division').val()
+                }
+                $.post(
+                    url,
+                    reqObject,
+                    function(response) {
+                        console.log(response);
+                        var redirect = response.redirect;
+                        console.log(redirect);
+                    }
+                );
+            }
+        });
+    });
+</script>
 
 </html>

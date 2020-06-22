@@ -1,18 +1,38 @@
 <html>
 <header>
     <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </header>
 
 <body>
     <h3>VolunteerLogin</h3>
     <form action="/volunteer/login" method="POST">
-        <input type="email" placeholder="email" name="Volunteer_email" required></input>
-        <input type="password" placeholder="password" name="Volunteer_password" required></input>
+        <input type="email" placeholder="email" id="email" name="Volunteer_email" required></input>
+        <input type="password" placeholder="password" id="password" name="Volunteer_password" required></input>
         <a href="#">Forgot password</a>
-        <input type="submit">
     </form>
     <br>
+    <button type="button" id="submit">submit</button>
     <button type="button"><a href="./volunteersignup">SignUp</a></button>
 </body>
+<script>
+    $(function() {
+        $('#submit').click(function() {
+            var url = "/volunteer/login";
+            var reqObject = {
+                Volunteer_email: $('#email').val(),
+                Volunteer_password: $('#password').val()
+            }
+            $.post(
+                url,
+                reqObject,
+                function(response) {
+                    console.log(response);
+                    var redirect = response.redirect;
+                    console.log(redirect);
+                });
+        });
+    });
+</script>
 
 </html>

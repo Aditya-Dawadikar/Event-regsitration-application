@@ -102,7 +102,8 @@ exports.signUp = (req, res, next) => {
                     console.log(doc);
                     res.status(200).json({
                         message: "succesfully registered",
-                        result: doc
+                        result: doc,
+                        redirect: "/views/volunteerlogin"
                     });
                 })
                 .catch(err => {

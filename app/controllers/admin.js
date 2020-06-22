@@ -108,7 +108,11 @@ exports.signUp = (req, res, next) => {
             admin.save()
                 .then(doc => {
                     console.log(doc);
-                    res.status(200).json(doc);
+                    res.status(200).json({
+                        message: "success",
+                        result: doc,
+                        redirect: "/views/adminlogin"
+                    });
                 })
                 .catch(err => {
                     res.status(500).json({

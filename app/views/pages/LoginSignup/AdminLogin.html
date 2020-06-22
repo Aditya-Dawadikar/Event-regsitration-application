@@ -1,18 +1,39 @@
 <html>
 <header>
     <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </header>
 
 <body>
     <h3>Admin Login</h3>
-    <form action="/admin/login" method="POST">
-        <input type="email" placeholder="email" name="Admin_email" required></input>
-        <input type="password" placeholder="password" name="Admin_password" required></input>
+    <form action="/admin/login" id="form" method="POST">
+        <input type="email" placeholder="email" id="email" name="Admin_email" required></input>
+        <input type="password" placeholder="password" id="password" name="Admin_password" required></input>
         <a href="#">Forgot password</a>
-        <input type="submit">
     </form>
     <br>
+    <button type="button" id="submit">Submit</button>
     <button type="button"><a href="./adminsignup">SignUp</a></button>
+
 </body>
+<script>
+    $(function() {
+        $('#submit').click(function() {
+            var url = "/admin/login";
+            var reqObject = {
+                Admin_email: $('#email').val(),
+                Admin_password: $('#password').val()
+            }
+            $.post(
+                url,
+                reqObject,
+                function(response) {
+                    console.log(response);
+                    var redirect = response.redirect;
+                    console.log(redirect);
+                });
+        });
+    });
+</script>
 
 </html>
