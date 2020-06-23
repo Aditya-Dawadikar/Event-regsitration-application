@@ -4,24 +4,38 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </header>
 
-<body>
+<body onload="func()">
     <h1>Teams</h1>
-    <table>
+    <table id="table">
         <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <th>Name</th>
+            <th>_id</th>
+            <th>Leader</th>
+            <th>Event</th>
         </tr>
     </table>
 </body>
 <script>
+    function func() {
+        var response = JSON.parse(window.localStorage.getItem('teams'));
+        var rows = response.count;
+        var cols = 4;
+        var table = document.querySelector('#table');
+
+        for (let i = 0; i < rows; i++) {
+            var row = table.insertRow(i + 1);
+            let teamName = row.insertCell(0);
+            let teamId = row.insertCell(1);
+            let Leader = row.insertCell(2);
+            let Event = row.insertCell(3);
+
+            teamName.innerHTML = response.Teams[i].Team_name;
+            teamId.innerHTML = response.Teams[i].Team_id;
+            Leader.innerHTML = response.Teams[i].Team_Leader;
+            Event.innerHTML = response.Teams[i].Event;
+
+        }
+    }
 </script>
 
 </html>

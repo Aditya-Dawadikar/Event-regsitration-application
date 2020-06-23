@@ -16,7 +16,7 @@ exports.visualizeEvents = (req, res, next) => {
             const eventData = new Array();
             for (let i = 0; i < docs.length; i++) {
                 const obj = {
-                    _id: docs[0]._id,
+                    _id: docs[i]._id,
                     Event_name: docs[i].Event_name,
                     required: docs[i].Registration.required,
                     registered: docs[i].Registration.registered
@@ -83,7 +83,7 @@ exports.getAllVolunteers = (req, res, next) => {
             }
             const resObject = {
                 count: docs.length,
-                volunter: docs.map(doc => {
+                volunteer: docs.map(doc => {
                     return {
                         Volunteer_id: doc._id,
                         Volunteer_name: doc.Volunteer_name,

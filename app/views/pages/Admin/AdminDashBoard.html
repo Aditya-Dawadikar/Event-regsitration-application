@@ -1,18 +1,44 @@
 <html>
 <header>
     <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </header>
 
-<body>
+<body onload="func()">
     <h3>AdminDashBoard</h3>
-    <button type="button">Overview</button>
-    <button type="button">Volunteers</button>
-    <button type="button">Events</button>
-    <button type="button">Teams</button>
-    <button type="button">send email</button>
+    <button type="button"><a href="/views/overview">Overview</a></button>
+    <button type="button"><a href="/views/volunteers">Volunteers</a></button>
+    <button type="button"><a href="/views/events">Events</a></button>
+    <button type="button"><a href="/views/teams">Teams</a></button>
+    <button type="button"><a href="/views/email">send email</a></button>
     <button type="button" id="logout">logout</button>
 </body>
 <script>
+    //get all required data
+    function func() {
+        $(function() {
+            var url = "/overview/events";
+            $.get(url, function(res) {
+                window.localStorage.setItem('events', JSON.stringify(res));
+            })
+        });
+
+        $(function() {
+            var url = "/overview/teams";
+            $.get(url, function(response) {
+                window.localStorage.setItem('teams', JSON.stringify(response));
+            });
+        });
+
+        $(function() {
+            url = "/overview/volunteers";
+            $.get(url, function(response) {
+                window.localStorage.setItem('volunteers', JSON.stringify(response));
+            });
+        });
+    }
+
+    //logout mechanism
     var logout = document.querySelector('#logout');
     logout.addEventListener('click', function() {
         window.localStorage.clear();

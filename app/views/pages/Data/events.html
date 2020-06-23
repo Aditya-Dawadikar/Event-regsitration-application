@@ -6,46 +6,33 @@
 
 <body onload="func()">
     <h1>Events</h1>
-    <table style="border: 2px solid black;" id="table">
+    <table id="table">
         <tr>
-            <th style="border: 2px solid black;width: 100px;">Event _id</th>
-            <th style="border: 2px solid black;width: 100px">Name</th>
-            <th style="border: 2px solid black;width: 100px">Required</th>
-            <th style="border: 2px solid black;width: 100px">Registered</th>
+            <th>Event _id</th>
+            <th>Name</th>
+            <th>Required</th>
+            <th>Registered</th>
         </tr>
-
     </table>
 </body>
 <script>
     function func() {
-        //get data
-        $(function() {
-            var url = "/overview/events";
-            $.get(url, function(res) {
-                window.localStorage.setItem('response', JSON.stringify(res));
-            })
-        });
-
-        //parse data
-        var response = JSON.parse(window.localStorage.getItem('response'));
-        console.log(response);
-
-        //display data
+        var response = JSON.parse(window.localStorage.getItem('events'));
         var rows = response.total;
         var cols = 4;
         var table = document.querySelector('#table');
 
         for (let i = 0; i < rows; i++) {
-            var row = table.insertRow(i);
+            var row = table.insertRow(i + 1);
             let eventName = row.insertCell(0);
             let eventId = row.insertCell(1);
             let required = row.insertCell(2);
             let registered = row.insertCell(3);
 
-            eventName.innerHTML = 1;
-            eventId.innerHTML = 2;
-            required.innerHTML = 3;
-            registered.innerHTML = 4;
+            eventName.innerHTML = response.eventData[i]._id;
+            eventId.innerHTML = response.eventData[i].Event_name;
+            required.innerHTML = response.eventData[i].required;
+            registered.innerHTML = response.eventData[i].registered;
 
         }
     }

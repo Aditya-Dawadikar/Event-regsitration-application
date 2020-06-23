@@ -4,24 +4,35 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </header>
 
-<body>
+<body onload="func()">
     <h1>Volunteers</h1>
-    <table>
+    <table id="table">
         <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <th>_id</th>
+            <th>Name</th>
+            <th>Phone</th>
         </tr>
     </table>
 </body>
 <script>
+    function func() {
+        var response = JSON.parse(window.localStorage.getItem('volunteers'));
+        var rows = response.count;
+        var cols = 3;
+        var table = document.querySelector('#table');
+
+        for (let i = 0; i < rows; i++) {
+            var row = table.insertRow(i + 1);
+            let VolunteerId = row.insertCell(0);
+            let name = row.insertCell(1);
+            let phone = row.insertCell(2);
+
+            VolunteerId.innerHTML = response.volunteer[i].Volunteer_id;
+            name.innerHTML = response.volunteer[i].Volunteer_name;
+            phone.innerHTML = response.volunteer[i].Volunteer_phone;
+
+        }
+    }
 </script>
 
 </html>
