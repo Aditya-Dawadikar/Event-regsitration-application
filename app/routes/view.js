@@ -13,11 +13,15 @@ app.get('/volunteersignup', viewController.volunteerSignUpPage);
 app.get('/admindashboard', viewController.adminDashBoard);
 app.get('/volunteerdashboard', viewController.volunteerDashBoard);
 
-//data roures
+//data routes
 app.get('/volunteers', viewController.volunteersPage);
 app.get('/teams', viewController.teamsPage);
 app.get('/overview', viewController.overviewPage);
 app.get('/events', viewController.eventsPage);
 app.get('/email', viewController.emailsPage);
+
+//registration routes
+app.get('/registerteam', viewController.resgisterTeamPage);
+app.get('/registerevent', viewController.registerEventPage);
 
 module.exports = app;

@@ -41,3 +41,11 @@ exports.overviewPage = (req, res) => {
 exports.emailsPage = (req, res) => {
     res.sendFile(__dirname + "/views/pages/Data/email.html");
 }
+
+//registration routes
+exports.registerEventPage = (req, res) => {
+    res.sendFile(__dirname + "/views/pages/RegisterEvent.html");
+}
+exports.resgisterTeamPage = (req, res) => {
+    res.sendFile(__dirname + "/views/pages/RegisterTeam.html");
+}
