@@ -4,7 +4,7 @@ const overviewHandler = require("../controllers/overview");
 const adminAuth = require("../middleware/adminAuth");
 const volunteerAuth = require("../middleware/volunteerAuth");
 
-router.get('/events', volunteerAuth, overviewHandler.visualizeEvents);
+router.get('/events', overviewHandler.visualizeEvents);
 
 router.get('/teams', volunteerAuth, overviewHandler.getAllTeams);
 

@@ -74,6 +74,7 @@ exports.getAllEvents = (req, res, next) => {
                 });
             }
             res.status(200).json({
+                count: docs.length,
                 Events: docs
             })
 
