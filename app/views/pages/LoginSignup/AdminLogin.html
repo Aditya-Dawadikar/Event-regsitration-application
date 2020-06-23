@@ -24,14 +24,22 @@
                 Admin_email: $('#email').val(),
                 Admin_password: $('#password').val()
             }
+            var redirect = "";
             $.post(
                 url,
                 reqObject,
                 function(response) {
                     console.log(response);
-                    var redirect = response.redirect;
-                    console.log(redirect);
-                });
+                    //save response in local storage
+                    window.localStorage.setItem('user', JSON.stringify(response));
+                    //redirect
+                    if (response.message === "login successful") {
+                        window.location.replace(response.redirect)
+                    } else {
+                        //this part is not working
+                        alert('login failed');
+                    }
+                })
         });
     });
 </script>

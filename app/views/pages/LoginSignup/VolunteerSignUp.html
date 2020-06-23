@@ -47,8 +47,10 @@
                     reqObject,
                     function(response) {
                         console.log(response);
-                        var redirect = response.redirect;
-                        console.log(redirect);
+                        //redirect on success
+                        if (response.message === "succesfully registered") {
+                            window.location.replace('/views/volunteerlogin');
+                        }
                     }
                 );
             }

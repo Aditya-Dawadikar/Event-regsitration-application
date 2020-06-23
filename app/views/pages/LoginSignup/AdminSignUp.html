@@ -37,8 +37,9 @@
                     reqObject,
                     function(response) {
                         console.log(response);
-                        var redirect = response.redirect;
-                        console.log(redirect);
+                        if (response.message === "success") {
+                            window.location.replace("/views/adminlogin");
+                        }
                     }
                 );
             }

@@ -28,8 +28,12 @@
                 reqObject,
                 function(response) {
                     console.log(response);
-                    var redirect = response.redirect;
-                    console.log(redirect);
+                    //save response in localstorage
+                    window.localStorage.setItem('user', JSON.stringify(response));
+                    //redirect on success
+                    if (response.message === "login successfull") {
+                        window.location.replace(response.redirect);
+                    }
                 });
         });
     });

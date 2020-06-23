@@ -10,6 +10,14 @@
     <button type="button">Events</button>
     <button type="button">Teams</button>
     <button type="button">send email</button>
+    <button type="button" id="logout">logout</button>
 </body>
+<script>
+    var logout = document.querySelector('#logout');
+    logout.addEventListener('click', function() {
+        window.localStorage.clear();
+        window.location.replace('/views/adminlogin');
+    })
+</script>
 
 </html>
