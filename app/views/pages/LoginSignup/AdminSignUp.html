@@ -23,7 +23,10 @@
         $('#submit').click(function() {
             var pass = $('#password').val();
             var cpass = $('#confirm_password').val();
-            if (pass != cpass) {
+            var regex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+            if (!pass.match(regex)) {
+                alert("password must contain atleast 1 lower case, 1 upper case , 1 symbol , 1 number");
+            } else if (pass != cpass) {
                 alert('password doesnt match');
             } else {
                 var url = "/admin/signup";
