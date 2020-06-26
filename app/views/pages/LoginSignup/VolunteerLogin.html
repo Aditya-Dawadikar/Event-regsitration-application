@@ -1,19 +1,71 @@
-<html>
-<header>
-    <title></title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SignUp Form</title>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" 
+        rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.css" 
+        integrity="sha256-6Wozb/CzRANFOaGqN+u/uRT7kcffVIQt9OhOuuA6I9o=" crossorigin="anonymous" />
+    <style>
+        body {
+            box-sizing: border-box;
+            font-family: "Open Sans", sans-serif;
+            background: #92bde7;
+            color:#485e74;
+            line-height:1.6;
+            padding:1em;
+        }
+        #forgot{
+            float:right;
+        }
+        a{
+            color: black;
+        }
+        a:hover,a:focus{
+            color:#ffffff;
+        }
+    </style>
+    <link rel="stylesheet" href="../../stylesheets/main.css" type="text/css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-</header>
+</head>
 
 <body>
-    <h3>VolunteerLogin</h3>
-    <form action="/volunteer/login" method="POST">
-        <input type="email" placeholder="email" id="email" name="Volunteer_email" required></input>
-        <input type="password" placeholder="password" id="password" name="Volunteer_password" required></input>
-        <a href="#">Forgot password</a>
-    </form>
-    <br>
-    <button type="button" id="submit">submit</button>
-    <button type="button"><a href="./volunteersignup">SignUp</a></button>
+    <div class="container2">
+        <!-- <h1 class="title">Volunteer Registration Form</h1> -->
+        <div class="wrapper animated bounceInLeft">
+            <div class="company-info">
+                <h3>Event Mania</h3>
+                <ul>
+                    <li><i class="fa fa-road"></i>PCCOE Campus</li>                   <!-- class used here is from fontawesome link from above for icons -->
+                    <li><i class="fa fa-phone"></i>999999999</li>
+                    <li><i class="fa fa-envelope"></i>pccoe@events.com</li>
+                </ul>
+            </div>
+            <div class="contact">
+                <h3>Volunteer Login</h3>
+                <form action="/volunteer/login" method="POST">
+                    <p>
+                        <label>Email</label>
+                        <input type="email" placeholder="email" id="email" name="Volunteer_email" required></input>
+                    </p>
+                    <p>
+                        <label>Password</label>
+                        <input type="password" placeholder="password" id="password" name="Volunteer_password" required></input>
+                    </p>
+                    <p>
+                        <button type="submit" >Log in</button>
+                        <button type="submit" ><a href="./volunteersignup" id="signUpp">SignUp</a></button>
+                    </p>
+                    <p>
+                        <a href="#" id="forgot">Forgot login or password?</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
     $(function() {
