@@ -36,7 +36,7 @@ exports.login = (req, res, next) => {
                     })
 
                     res.status(200).json({
-                        message: "login successfull",
+                        message: "success",
                         token: token,
                         refreshToken: refreshToken,
                         redirect: "/views/volunteerdashboard"

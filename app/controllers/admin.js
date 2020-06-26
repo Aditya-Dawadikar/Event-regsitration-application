@@ -40,7 +40,7 @@ exports.login = (req, res, next) => {
 
                         //return response
                         res.status(200).json({
-                            message: "login successful",
+                            message: "success",
                             token: token,
                             refreshToken: refreshToken,
                             redirect: "/views/admindashboard"

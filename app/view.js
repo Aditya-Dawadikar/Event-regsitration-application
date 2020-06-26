@@ -44,8 +44,8 @@ exports.emailsPage = (req, res) => {
 
 //registration routes
 exports.registerEventPage = (req, res) => {
-    res.sendFile(__dirname + "/views/pages/RegisterEvent.html");
+    res.sendFile(__dirname + "/views/pages/Register/RegisterEvent.html");
 }
 exports.resgisterTeamPage = (req, res) => {
-    res.sendFile(__dirname + "/views/pages/RegisterTeam.html");
+    res.sendFile(__dirname + "/views/pages/Register/RegisterTeam.html");
 }

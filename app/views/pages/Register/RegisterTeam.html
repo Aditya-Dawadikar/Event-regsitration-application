@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>SignUp Form</title>
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" 
-        rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.css" 
-        integrity="sha256-6Wozb/CzRANFOaGqN+u/uRT7kcffVIQt9OhOuuA6I9o=" crossorigin="anonymous" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.css" integrity="sha256-6Wozb/CzRANFOaGqN+u/uRT7kcffVIQt9OhOuuA6I9o=" crossorigin="anonymous" />
     <style>
         body {
             box-sizing: border-box;
             font-family: "Open Sans", sans-serif;
             background: #92bde7;
-            color:#485e74;
-            line-height:1.6;
-            padding:1em;
+            color: #485e74;
+            line-height: 1.6;
+            padding: 1em;
         }
     </style>
     <link rel="stylesheet" href="../stylesheets/main.css" type="text/css">
@@ -63,13 +62,10 @@
                         <input type="number" placeholder="count eg:1,2,3" id="count" name="TeamCount" required>
                     </p>
                     <label>Choose an Event</label>
-                    <select>
+                    <select id="select">
                         <option disabled selected value>--select--</option>
-                        <option value="Hackathon">Hackathon</option>
-                        <option value="Perplexo">Perplexo</option>
-                        <option value="Codigo">Codigo</option>
-                        <option value="Knowledge Decimination">Knowledge Decimination</option>
                     </select>
+                    <br><br>
                     <p>
                         <button type="submit" id="submit">Submit</button>
                     </p>
@@ -78,5 +74,15 @@
         </div>
     </div>
 </body>
+<script>
+    var select = document.querySelector('#select');
+    var events = JSON.parse(window.localStorage.getItem('events'));
+    var count = events.total;
+    for (let i = 0; i < count; i++) {
+        var option = document.createElement('option');
+        option.text = events.eventData[i].Event_name;
+        select.add(option);
+    }
+</script>
 
 </html>
