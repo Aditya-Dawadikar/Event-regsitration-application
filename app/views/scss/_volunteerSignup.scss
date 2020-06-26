@@ -1,0 +1,99 @@
+
+$bodycolor: #92bde7;
+
+.container2{
+    max-width: 1170px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1em;
+}     
+
+.wrapper{
+    box-shadow: 0 0 20px 0 rgba(72,94,116,0.7);
+}
+
+.wrapper > *{
+    padding: 1em;
+}
+
+.company-info{
+    background: #c9e6ff;
+    
+}
+
+.company-info h3{
+    text-align: center;
+    margin: 0 0 1rem 0;
+}
+
+.contact{
+    background: #ffffff;
+    
+    h3{
+        text-align: center;
+    }
+}
+
+.contact form label{
+    display:block;
+    
+}    
+
+.contact form p{  
+    margin: 0;
+}
+
+ul{
+    list-style: none;
+    padding: 0;
+}
+.contact form button,.contact form input{
+    width: 90%;
+    padding:.7em;
+    border-radius: 5px;
+    margin-bottom: .5rem;
+    border:1px solid #c9e6ff;
+    font-size: 14px;
+}
+
+form {
+    margin-left: 15%;
+    margin-right:15%;
+    width: 70%;
+}
+
+.contact form button{
+    background: #c9e6ff;
+    border: 0;
+    text-transform: uppercase;
+
+}
+.contact form button:hover,.contact form button:focus{
+    background: $bodycolor;
+    color:#ffffff;
+    outline :0;
+    transition: background-color 1s ease-in-out;
+}
+select{
+    font-size: medium;
+}
+//media queries for large screens
+
+@media(min-width:700px){
+    .wrapper{
+        display:grid;
+        grid-template-columns: 1fr 2fr;
+    }
+    .wrapper > *{
+        padding:2em;
+    }
+    .contact form button,.contact form input{
+        font-size: 18px;
+    }
+    .company-info h3, .company-info ul,.brand{
+        text-align: left;
+    }
+    select{
+        font-size: large;
+    }
+}
