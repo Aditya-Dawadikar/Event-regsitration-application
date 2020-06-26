@@ -9,6 +9,7 @@ module.exports = (req, res, next) => {
             throw new Error();
         }
     } catch (err) {
+        console.log(err);
         return res.status(401).json({
             message: "access denied"
         });

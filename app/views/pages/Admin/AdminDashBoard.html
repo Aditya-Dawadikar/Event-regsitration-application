@@ -18,23 +18,62 @@
     //get all required data
     function func() {
         $(function() {
-            var url = "/overview/events";
-            $.get(url, function(res) {
-                window.localStorage.setItem('events', JSON.stringify(res));
-            })
-        });
-
-        $(function() {
             var url = "/overview/teams";
-            $.get(url, function(response) {
-                window.localStorage.setItem('teams', JSON.stringify(response));
+            var user = JSON.parse(window.localStorage.getItem('user'));
+            var token = user.token;
+            var refreshToken = user.refreshToken;
+            $.ajax({
+                url: url,
+                type: "GET",
+                headers: {
+                    Authorization: 'Bearer ' + token
+                },
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('X-Test-Header', 'test-value');
+                },
+                success: function(res) {
+                    window.localStorage.setItem('teams', JSON.stringify(res));
+                }
             });
         });
 
         $(function() {
-            url = "/overview/volunteers";
-            $.get(url, function(response) {
-                window.localStorage.setItem('volunteers', JSON.stringify(response));
+            var url = "/overview/events";
+            var user = JSON.parse(window.localStorage.getItem('user'));
+            var token = user.token;
+            var refreshToken = user.refreshToken;
+            $.ajax({
+                url: url,
+                type: "GET",
+                headers: {
+                    Authorization: 'Bearer ' + token
+                },
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('X-Test-Header', 'test-value');
+                },
+                success: function(res) {
+                    window.localStorage.setItem('events', JSON.stringify(res));
+                }
+            });
+        });
+
+        $(function() {
+            var url = "/overview/volunteers";
+            var user = JSON.parse(window.localStorage.getItem('user'));
+            var token = user.token;
+            var refreshToken = user.refreshToken;
+            $.ajax({
+                url: url,
+                type: "GET",
+                headers: {
+                    Authorization: 'Bearer ' + token
+                },
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('X-Test-Header', 'test-value');
+                },
+                success: function(res) {
+                    window.localStorage.setItem('volunteers', JSON.stringify(res));
+                }
             });
         });
     }
