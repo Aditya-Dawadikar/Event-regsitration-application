@@ -67,6 +67,9 @@ exports.sendMailToTeamsByEventId = (req, res, next) => {
                     emailsRecipients = team_email;
                 }
             }
+            if (docs.length < 2) {
+                team_email = emailsRecipients;
+            }
 
             //email details
             const email_option = {
@@ -111,8 +114,8 @@ exports.sendMailToAllTeams = (req, res, next) => {
     Team.find()
         .exec()
         .then(docs => {
-
             //extract email from database
+            console.log(docs.length);
             var emailsRecipients = docs[0].Team_Leader.Leader_email + ',';
             var team_email = "";
             for (i = 1; i < docs.length; i++) {
@@ -126,7 +129,9 @@ exports.sendMailToAllTeams = (req, res, next) => {
                     emailsRecipients = team_email;
                 }
             }
-
+            if (docs.length < 2) {
+                team_email = emailsRecipients;
+            }
             //email details
             const email_option = {
                 from: process.env.APPLICATION_EMAIL,

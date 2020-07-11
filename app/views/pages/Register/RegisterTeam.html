@@ -39,11 +39,11 @@
                 <form>
                     <p>
                         <label>Team Name</label>
-                        <input type="text" placeholder="name" id="name" name="Team_name" required>
+                        <input type="text" placeholder="name" id="teamName" name="Team_name" required>
                     </p>
                     <p>
                         <label>Leader Name</label>
-                        <input type="text" placeholder="name" id="name" name="TeamLeader_name" required>
+                        <input type="text" placeholder="name" id="leaderName" name="TeamLeader_name" required>
                     </p>
                     <p>
                         <label>EmailId</label>
@@ -67,7 +67,7 @@
                     </select>
                     <br><br>
                     <p>
-                        <button type="submit" id="submit">Submit</button>
+                        <button id="submit" onclick="func()">Submit</button>
                     </p>
                 </form>
             </div>
@@ -83,6 +83,79 @@
         option.text = events.eventData[i].Event_name;
         select.add(option);
     }
+
+    //submit data
+    var teamName = $('#teamName').val();
+    var leaderName = $('#teamName').val();
+    var email = $('#teamName').val();
+    var phone = $('#teamName').val();
+    var altphone = $('#teamName').val();
+    var option = select.options[select.selectedIndex];
+    var eventName = option.text;
+    var memberCount = $('#count').val();
+    var url = "http://localhost:3000/team/";
+    var user = JSON.parse(localStorage.getItem('user'));
+    var token = user.token;
+
+    var Object = {
+        Team_name: teamName,
+        Team_Leader: {
+            Leader_name: leaderName,
+            Leader_email: email,
+            Leader_phone: phone,
+            Alternative_phone: altphone
+        },
+        Team_Member_count: memberCount,
+        Team_Members: [{
+            member_name: "Aditya"
+        }, {
+            member_name: "Ople"
+        }, {
+            member_name: "izac"
+        }, {
+            member_name: "mike"
+        }],
+        Event: {
+            Event_name: eventName
+        },
+        Payment: {
+            Payment_method: "GPay",
+            Trasaction_Id: "nsjbfba",
+            Payment_status: "completed"
+        },
+        Registrtion_date: Date.now()
+    };
+
+    var reqObject = JSON.stringify(Object);
+
+    function func() {
+        console.log(reqObject);
+    }
+
+    /*
+        $(function() {
+            $('#submit').click(function() {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    contentType: 'application/json',
+                    data: reqObject,
+                    dataType: 'json',
+                    headers: {
+                        Authorization: 'Bearer ' + token
+                    },
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('X-Test-Header', 'test-value');
+                    },
+                    success: function(res) {
+                        window.location.replace("/views/volunteerdashboard");
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            })
+        });*/
 </script>
 
 </html>
